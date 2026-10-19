@@ -1,0 +1,54 @@
+/*
+ * Two themes only: black (dark) and cream (light). Accents are orange + cyan.
+ * Everything else in the codebase uses these variables, so the theme toggle is free.
+ */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #050505;
+  --bg-2: #0e0e0e;
+  --ink: #f2ecda;
+
+  --cyan: #96e0f7;
+  --orange: #f89d51;
+  --on-accent: #050505;
+
+  --dot-rgb: 150, 224, 247;
+  --glow: 0 0 14px rgba(150, 224, 247, 0.4);
+  --scan: rgba(0, 0, 0, 0.18);
+  --vignette: rgba(0, 0, 0, 0.55);
+  --grain: 0.09;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f2ead6;
+  --bg-2: #faf4e3;
+  --ink: #131313;
+
+  --cyan: #0b6a85;
+  --orange: #bf560a;
+  --on-accent: #f2ead6;
+
+  --dot-rgb: 11, 106, 133;
+  --glow: none;
+  --scan: rgba(60, 40, 0, 0.05);
+  --vignette: rgba(90, 60, 10, 0.18);
+  --grain: 0.13;
+}
+
+:root {
+  --muted: color-mix(in srgb, var(--ink) 64%, transparent);
+  --faint: color-mix(in srgb, var(--ink) 14%, transparent);
+  --cyan-soft: color-mix(in srgb, var(--cyan) 10%, transparent);
+  --line: color-mix(in srgb, var(--cyan) 40%, transparent);
+  --accent: var(--cyan);
+
+  --font-display: 'Bitcount Prop Single', 'Courier New', monospace;
+  --font-body: 'VT323', 'Courier New', monospace;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --px: 6px; /* size of the stepped pixel corners */
+  --nav-h: 72px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}

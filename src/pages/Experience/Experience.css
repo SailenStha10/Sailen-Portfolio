@@ -1,0 +1,472 @@
+/* ---------- Character select ---------- */
+.select__banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.2rem;
+  margin-bottom: 1.6rem;
+  letter-spacing: 0.2em;
+  font-size: 1.3rem;
+}
+.select__banner span {
+  padding: 0 0.7rem;
+  background: var(--orange);
+  color: var(--on-accent);
+}
+.select__banner em {
+  margin-left: auto;
+  font-style: normal;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+.select__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.4rem;
+}
+.char {
+  position: relative;
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+  padding: 1.3rem 1.3rem 1.2rem;
+  border: 0;
+  text-align: left;
+  background: var(--bg-2);
+  transition: transform 0.3s var(--ease), background 0.3s;
+}
+.char.is-focus {
+  transform: translateY(-8px);
+  background: color-mix(in srgb, var(--accent) 9%, var(--bg-2));
+  box-shadow: 0 24px 50px -24px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+.char.is-focus::after {
+  opacity: 1;
+  box-shadow: inset 0 0 0 3px var(--accent);
+}
+.char__done {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  z-index: 2;
+  padding: 0 0.6rem;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 1rem;
+  letter-spacing: 0.12em;
+}
+.char__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 10.5rem;
+  background: repeating-linear-gradient(0deg, var(--cyan-soft) 0 2px, transparent 2px 8px),
+    radial-gradient(circle at 50% 70%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%);
+}
+.char__sprite {
+  width: 6.2rem;
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--accent) 50%, transparent));
+}
+.char.is-focus .char__sprite {
+  animation: hop 0.7s steps(4, end) infinite;
+}
+@keyframes hop {
+  50% {
+    transform: translateY(-14px);
+  }
+}
+.char__pad {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  bottom: 0.9rem;
+  height: 4px;
+  background: var(--accent);
+}
+.char__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+.char__tag {
+  color: var(--muted);
+  font-size: 1.3rem;
+}
+.char__stats {
+  display: grid;
+  gap: 0.25rem;
+  margin-top: 0.3rem;
+}
+.char__stats > span {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  align-items: center;
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+}
+.char__stats b {
+  font-weight: 400;
+}
+.char__blocks {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 2px;
+  height: 0.7rem;
+}
+.char__blocks i {
+  background: var(--faint);
+}
+.char__blocks i.is-on {
+  background: var(--accent);
+}
+.char__unlocks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  align-items: center;
+  margin-top: 0.4rem;
+}
+.char__unlocks small {
+  width: 100%;
+  letter-spacing: 0.25em;
+  color: var(--orange);
+}
+.char__unlocks .chip {
+  font-size: 1rem;
+  padding: 0 0.5rem;
+}
+.char__cta {
+  margin-top: 0.5rem;
+  padding: 0.25rem 0;
+  text-align: center;
+  background: var(--accent);
+  color: var(--on-accent);
+  letter-spacing: 0.2em;
+  opacity: 0.55;
+  transition: opacity 0.3s;
+}
+.char.is-focus .char__cta {
+  opacity: 1;
+}
+
+/* ---------- Game ---------- */
+.rg {
+  display: grid;
+  gap: 1.2rem;
+}
+.rg__hud {
+  --b: var(--accent);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1.6rem;
+  padding: 0.6rem 1rem;
+  background: var(--bg-2);
+  letter-spacing: 0.12em;
+  font-size: 1.25rem;
+}
+.rg__hud b {
+  font-weight: 400;
+  color: var(--accent);
+}
+.rg__back {
+  padding: 0 0.7rem;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--cyan);
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+}
+.rg__back:hover {
+  background: var(--cyan);
+  color: var(--on-accent);
+}
+.rg__who {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+.rg__lives {
+  display: inline-flex;
+  gap: 4px;
+}
+.rg__lives .sprite {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.rg__lives .is-lost {
+  opacity: 0.2;
+  filter: grayscale(1);
+}
+.rg__best {
+  margin-left: auto;
+  color: var(--muted);
+}
+
+.rg__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 17rem;
+  gap: 1.2rem;
+  align-items: start;
+}
+.rg__stage {
+  --b: var(--accent);
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+.rg__canvas {
+  width: 100%;
+  height: clamp(260px, 36vw, 400px);
+  display: block;
+  touch-action: manipulation;
+}
+.rg__flash {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: var(--orange);
+  pointer-events: none;
+  animation: hit-flash 0.4s ease-out forwards;
+}
+@keyframes hit-flash {
+  from {
+    opacity: 0.55;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.rg__ready,
+.rg__done {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.7rem;
+  padding: 1.2rem;
+  text-align: center;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(2px);
+}
+.rg__ready-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 7vw, 4.4rem);
+  color: var(--ink);
+  text-shadow: var(--glow);
+}
+.rg__ready b {
+  font-weight: 400;
+  color: var(--accent);
+}
+.rg__keys {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.4rem;
+  font-size: 1.2rem;
+  color: var(--muted);
+}
+kbd {
+  display: inline-block;
+  min-width: 1.8rem;
+  margin: 0 0.15rem;
+  padding: 0 0.4rem;
+  border: 2px solid var(--ink);
+  border-bottom-width: 4px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+}
+.rg__ready-hint {
+  color: var(--orange);
+  letter-spacing: 0.25em;
+  animation: blink 1.1s steps(2, start) infinite;
+}
+.rg__banner {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  z-index: 5;
+  display: grid;
+  justify-items: center;
+  min-width: min(300px, 80%);
+  padding: 0.6rem 1.6rem;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: var(--on-accent);
+  text-align: center;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.rg__banner small {
+  letter-spacing: 0.25em;
+}
+.rg__banner strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  line-height: 1;
+}
+.rg__banner em {
+  font-style: normal;
+  font-size: 1.2rem;
+}
+.rg__notice {
+  position: absolute;
+  left: 50%;
+  bottom: 1.2rem;
+  z-index: 5;
+  padding: 0.1rem 1rem;
+  transform: translateX(-50%);
+  background: var(--orange);
+  color: var(--on-accent);
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+.rg__done-kicker {
+  letter-spacing: 0.3em;
+  color: var(--orange);
+}
+.rg__done h2 {
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  text-shadow: var(--glow);
+}
+.rg__done-score b {
+  font-weight: 400;
+  color: var(--accent);
+}
+.rg__done-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  max-width: 34rem;
+}
+.rg__done-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+/* Skill tree */
+.rg__tree {
+  --b: var(--accent);
+  list-style: none;
+  margin: 0;
+  padding: 1rem 1.1rem;
+  display: grid;
+  gap: 0.7rem;
+  background: var(--bg-2);
+}
+.rg__tree-title {
+  letter-spacing: 0.2em;
+  font-size: 1.15rem;
+  color: var(--orange);
+}
+.rg__tree li:not(.rg__tree-title) {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  color: var(--muted);
+}
+.rg__tree-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 2px solid var(--faint);
+  font-size: 1rem;
+}
+.rg__tree li.is-open {
+  color: var(--ink);
+}
+.rg__tree li.is-open .rg__tree-icon {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+.rg__tree strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  text-transform: uppercase;
+}
+.rg__tree em {
+  font-style: normal;
+  font-size: 1.1rem;
+  line-height: 1.05;
+}
+
+/* Touch pad (phones / tablets) */
+.rg__pad {
+  display: none;
+  grid-template-columns: repeat(3, 1fr) 1.6fr;
+  gap: 0.5rem;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.rg__pad button {
+  padding: 0.9rem 0;
+  border: 2px solid var(--accent);
+  background: var(--cyan-soft);
+  color: var(--accent);
+  font-size: 1.5rem;
+  touch-action: none;
+}
+.rg__pad button:active {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.rg__pad .rg__jump {
+  letter-spacing: 0.2em;
+}
+
+@media (max-width: 960px) {
+  .select__grid {
+    grid-template-columns: 1fr;
+  }
+  .char {
+    grid-template-columns: 8.5rem 1fr;
+    column-gap: 1rem;
+  }
+  .char__stage {
+    grid-row: span 4;
+    height: 100%;
+    min-height: 8rem;
+  }
+  .char__stats,
+  .char__unlocks,
+  .char__cta {
+    grid-column: 1 / -1;
+  }
+  .rg__layout {
+    grid-template-columns: 1fr;
+  }
+  .rg__tree {
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  }
+  .rg__tree-title {
+    grid-column: 1 / -1;
+  }
+}
+@media (pointer: coarse), (max-width: 820px) {
+  .rg__pad {
+    display: grid;
+  }
+  .rg__ready-hint::after {
+    content: ' / tap the buttons';
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .char.is-focus .char__sprite,
+  .rg__ready-hint {
+    animation: none;
+  }
+}

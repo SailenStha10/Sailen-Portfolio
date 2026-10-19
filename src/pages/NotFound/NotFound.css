@@ -1,0 +1,21 @@
+.not-found {
+  display: grid;
+  align-items: center;
+}
+.not-found__inner {
+  text-align: center;
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+}
+.not-found__code {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(6rem, 24vw, 14rem);
+  line-height: 1;
+  color: var(--ink);
+  text-shadow: 0 0 30px color-mix(in srgb, var(--cyan) 40%, transparent);
+}
+.not-found__btn {
+  margin-top: 1rem;
+}

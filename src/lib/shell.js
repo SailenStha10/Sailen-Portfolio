@@ -1,7 +1,7 @@
 import { profile } from '../data/site';
 import { sound } from './sound';
 import { ACHIEVEMENTS, achievementStore, unlock } from './achievements';
-import { cleanName, slug, visitorStore } from './session';
+import { slug, visitorStore } from './session';
 
 /** Directories reachable with `cd`. Each maps to a route. */
 export const DIRS = {
@@ -14,14 +14,14 @@ export const DIRS = {
 };
 
 export const COMMANDS = [
-  'help', 'ls', 'cd', 'pwd', 'whoami', 'clear', 'login', 'logout', 'theme', 'sound', 'cat', 'sudo', 'fortune', 'badges',
+  'help', 'ls', 'cd', 'pwd', 'whoami', 'clear', 'theme', 'sound', 'cat', 'sudo', 'fortune', 'badges',
 ];
 
 const owner = () => profile.name.toLowerCase();
 const visitor = () => visitorStore.get() || 'guest';
 const ownerSlug = () => slug(profile.name);
 
-/** Turn `cd` arguments into a directory key ('home', 'about', 'login', ...). */
+/** Turn `cd` arguments into a directory key ('home', 'about', ...). */
 export function normalizeDir(arg = '') {
   const clean = arg.replace(/^\/+|\/+$/g, '').replace(/^~\/?/, '').toLowerCase();
   if (clean === '.') return '.';
@@ -46,7 +46,7 @@ const HELP_USER = [
   ['fortune', 'a tiny piece of wisdom'],
   ['badges', 'your unlocked achievements'],
   ['theme light|dark · sound on|off', 'screen and audio'],
-  ['clear · logout', 'tidy up or sign out'],
+  ['clear', 'tidy up the screen'],
 ];
 
 const FORTUNES = [
@@ -57,77 +57,16 @@ const FORTUNES = [
   'You will soon meet a recruiter. Be kind, they have a quota.',
   'Today is a great day to commit something small.',
 ];
-const HEX_LINES = ['0x7F3A9C', '0xB41E02', '0x00FF5D', '0xC0DE42', '0xDEADBE', '0x1337AF', '0xFACADE'];
-
-async function doLogin(ctx) {
-  await ctx.print('== SECURITY CHECKPOINT ==', 'big');
-  await ctx.print(`This terminal is guarded by the ${profile.name} Mainframe™.`, 'dim');
-  await ctx.wait(350);
-
-  let name = '';
-  for (let attempt = 0; !name; attempt += 1) {
-    const raw = await ctx.ask('login as:');
-    name = cleanName(raw);
-    if (!name) {
-      sound.play('deny');
-      await ctx.print(attempt > 1 ? 'A name, any name. Try "Neo"?' : 'a name is required to enter.', 'warn');
-    }
-  }
-  ctx.setVisitor(name);
-  await ctx.print(`Identity accepted: ${name}`, 'ok');
-  await ctx.wait(250);
-  await ctx.print('Scanning retina ...');
-  await ctx.progress('SCAN', 800);
-  await ctx.print('Match found. (You look great, by the way.)', 'ok');
-  await ctx.wait(300);
-  await ctx.print('Bypassing firewall ...', 'warn');
-  ctx.fx('matrix', 2300);
-  for (const hex of HEX_LINES) {
-    await ctx.print(`  ${hex}  ${'#'.repeat(6 + (hex.charCodeAt(3) % 12))}  OK`, 'dim');
-    await ctx.wait(160);
-  }
-  await ctx.print('Cracking the vault ...', 'warn');
-  await ctx.progress('CRACK', 1000);
-  ctx.login();
-  unlock('login');
-  sound.play('grant');
-  await ctx.print('');
-  await ctx.print('*** ACCESS GRANTED ***', 'big');
-  await ctx.print(`Welcome, ${name}.`, 'big');
-  await ctx.print(`You are about to travel through ${profile.name}'s whole story.`, 'ok');
-  await ctx.print('');
-  const rows = [
-    ['VISITOR', name.toUpperCase().slice(0, 16)],
-    ['HOST', profile.name.toUpperCase()],
-    ['CLASS', 'BSc CSIT'],
-    ['LOOT', 'CODE / DESIGN / VOICE'],
-  ];
-  const width = 32;
-  await ctx.print(`+${'-'.repeat(width)}+`, 'dim');
-  for (const [k, v] of rows) {
-    await ctx.print(`| ${k.padEnd(8)} ${v.padEnd(width - 11)} |`, 'dim');
-    await ctx.wait(70);
-  }
-  await ctx.print(`+${'-'.repeat(width)}+`, 'dim');
-  await ctx.print('');
-  await ctx.print('YOUR JOURNEY', 'warn');
-  await ctx.print('  1. read the story ............ cd about', 'dim');
-  await ctx.print('  2. play the experience ....... cd experience', 'dim');
-  await ctx.print('  3. say hello ................. cd contact', 'dim');
-  await ctx.print('');
-  await ctx.print('Click a destination, or type it:');
-  await ctx.dirs(Object.keys(DIRS).filter((d) => d !== 'home'));
-}
 
 async function doTravel(ctx, key) {
   const path = DIRS[key];
   await ctx.print(`resolving /${key} ...`);
-  await ctx.wait(300);
+  await ctx.wait(150);
   await ctx.print('clearance .......... OK', 'ok');
-  await ctx.wait(250);
+  await ctx.wait(120);
   await ctx.print(`engaging warp drive → /${key}`, 'warn');
   ctx.travel(path);
-  await ctx.progress('TRAVELLING', 1000);
+  await ctx.progress('TRAVELLING', 600);
 }
 
 /**
@@ -163,27 +102,15 @@ export async function runCommand(input, ctx) {
     }
 
     case 'login':
-      if (ctx.loggedIn) await ctx.print(`already signed in as ${visitor()}.`, 'warn');
-      else await doLogin(ctx);
-      return;
-
     case 'logout':
-    case 'exit': {
-      if (!ctx.loggedIn) {
-        await ctx.print('no active session.', 'warn');
-        return;
-      }
-      ctx.logout();
-      await ctx.print('session closed. bye!', 'ok');
-      if (ctx.cwd !== 'home') ctx.travel('/');
+    case 'exit':
+      await ctx.print('no sign-in needed here — you are already in. try `ls`.', 'ok');
       return;
-    }
 
     case 'cd': {
       const key = normalizeDir(arg);
       if (key === 'login') {
-        if (ctx.loggedIn) await ctx.print(`already signed in as ${visitor()}.`, 'warn');
-        else await doLogin(ctx);
+        await ctx.print('no sign-in needed here — you are already in. try `ls`.', 'ok');
         return;
       }
       if (!ctx.loggedIn) {
@@ -241,7 +168,7 @@ export async function runCommand(input, ctx) {
       }
       ctx.setTheme(wanted);
       unlock('theme');
-      await ctx.print(`screen set to ${wanted === 'light' ? 'cream' : 'black'}.`, 'ok');
+      await ctx.print(`theme set to ${wanted}.`, 'ok');
       return;
     }
 

@@ -19,8 +19,8 @@ function Rain() {
     canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const styles = getComputedStyle(document.documentElement);
-    const rgb = styles.getPropertyValue('--dot-rgb').trim() || '150, 224, 247';
-    const bg = styles.getPropertyValue('--bg').trim() || '#000';
+    const rgb = styles.getPropertyValue('--dot-rgb').trim() || '154, 140, 255';
+    const bg = '#0b0a14';
     const drops = Array.from({ length: Math.ceil(w / SIZE) }, () => Math.random() * -40);
     ctx.font = `${SIZE}px monospace`;
     let raf;

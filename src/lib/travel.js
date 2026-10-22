@@ -4,8 +4,8 @@ import { sound } from './sound';
 /** true while the warp-speed overlay is covering the screen. */
 export const travelStore = createStore({ active: false, to: '' });
 
-const WARP_MS = 1100;
-const SETTLE_MS = 450;
+const WARP_MS = 700;
+const SETTLE_MS = 250;
 
 /** Play the warp animation + sound, navigate, then lift the overlay. Resolves once underway. */
 export function travel(navigate, to) {

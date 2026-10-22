@@ -21,20 +21,20 @@ export const profile = {
   tagline:
     'A BSc CSIT student who turns ideas into software, interfaces, artwork and songs.',
   socials: [
-    { label: 'GitHub', href: 'https://github.com/' },
-    { label: 'LinkedIn', href: 'https://linkedin.com/' },
-    { label: 'Instagram', href: 'https://instagram.com/' },
-    { label: 'YouTube', href: 'https://youtube.com/' },
+    { label: 'GitHub', href: 'https://github.com/', icon: 'github' },
+    { label: 'LinkedIn', href: 'https://linkedin.com/', icon: 'linkedin' },
+    { label: 'Instagram', href: 'https://instagram.com/', icon: 'instagram' },
+    { label: 'YouTube', href: 'https://youtube.com/', icon: 'youtube' },
   ],
 };
 
 export const navLinks = [
-  { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
-  { to: '/experience', label: 'Experience' },
-  { to: '/skills', label: 'Skills' },
-  { to: '/projects', label: 'Projects' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/', label: 'Home', blurb: 'The terminal where the journey starts.' },
+  { to: '/about', label: 'About', blurb: 'The story, told in five characters.' },
+  { to: '/experience', label: 'Experience', blurb: 'Play a short game and unlock skills.' },
+  { to: '/skills', label: 'Skills', blurb: 'Code, design and music at a glance.' },
+  { to: '/projects', label: 'Projects', blurb: 'Things I built, designed and recorded.' },
+  { to: '/contact', label: 'Contact', blurb: 'Say hello — my inbox is open.' },
 ];
 
 /**
@@ -88,7 +88,7 @@ export const chapters = [
     label: 'Scene 04',
     role: 'The Singer',
     title: 'The Encore',
-    accent: 'var(--ink)',
+    accent: 'var(--mint)',
     caption: 'And then the music started.',
     quote: 'The developer who sings.',
     meaning: 'Music keeps me calm, brave and creative. It is the part of me that performs.',
@@ -149,7 +149,7 @@ export const characters = [
     name: 'The Singer',
     short: 'Singer',
     prop: 'mic',
-    accent: 'var(--ink)',
+    accent: 'var(--mint)',
     tagline: 'Brings feeling to everything.',
     stats: { CODE: 4, LOGIC: 5, DESIGN: 6, CREATIVITY: 9, VOICE: 10 },
     checkpoints: [
@@ -162,48 +162,68 @@ export const characters = [
   },
 ];
 
-// PLACEHOLDER skill levels (0–100)
+// Skills shown as logos. `icon` is a devicon name (react, nodejs…) or a built-in icon ('mic', 'pen'…).
 export const skillGroups = [
   {
     id: 'dev',
-    label: 'Development',
-    color: 'var(--cyan)',
+    label: 'Develop',
+    word: 'Code',
+    color: 'var(--blue)',
+    art: 'laptop',
     skills: [
-      { name: 'React & JavaScript', level: 85 },
-      { name: 'Node.js & Express', level: 75 },
-      { name: 'Databases (SQL / MongoDB)', level: 70 },
-      { name: 'HTML & CSS', level: 90 },
-      { name: 'Git & GitHub', level: 78 },
+      { name: 'HTML', icon: 'html5' },
+      { name: 'CSS', icon: 'css3' },
+      { name: 'JavaScript', icon: 'javascript' },
+      { name: 'React', icon: 'react' },
+      { name: 'Node.js', icon: 'nodejs' },
+      { name: 'Express', icon: 'express' },
+      { name: 'MongoDB', icon: 'mongodb' },
+      { name: 'MySQL', icon: 'mysql' },
+      { name: 'Python', icon: 'python' },
+      { name: 'Java', icon: 'java' },
+      { name: 'Git', icon: 'git' },
+      { name: 'GitHub', icon: 'github' },
+      { name: 'VS Code', icon: 'vscode' },
     ],
   },
   {
     id: 'design',
     label: 'Design',
-    color: 'var(--ink)',
+    word: 'Design',
+    color: 'var(--coral)',
+    art: 'palette',
     skills: [
-      { name: 'UI/UX Design (Figma)', level: 85 },
-      { name: 'Graphic Design', level: 80 },
-      { name: 'Prototyping', level: 75 },
-      { name: 'Typography & Colour', level: 82 },
-      { name: 'Motion Design', level: 60 },
+      { name: 'Figma', icon: 'figma' },
+      { name: 'Photoshop', icon: 'photoshop' },
+      { name: 'Illustrator', icon: 'illustrator' },
+      { name: 'Canva', icon: 'canva' },
+      { name: 'Typography', icon: 'type', glyph: true },
+      { name: 'Prototyping', icon: 'layers', glyph: true },
+      { name: 'Branding', icon: 'palette', glyph: true },
     ],
   },
   {
     id: 'music',
-    label: 'Music',
-    color: 'var(--orange)',
+    label: 'Sing',
+    word: 'Music',
+    color: 'var(--mint)',
+    art: 'mic',
     skills: [
-      { name: 'Vocals', level: 90 },
-      { name: 'Stage Presence', level: 80 },
-      { name: 'Songwriting', level: 68 },
-      { name: 'Music Production', level: 50 },
+      { name: 'Vocals', icon: 'mic', glyph: true },
+      { name: 'Songwriting', icon: 'pen', glyph: true },
+      { name: 'Stage Presence', icon: 'spotlight', glyph: true },
+      { name: 'Production', icon: 'headphones', glyph: true },
     ],
   },
 ];
 
-export const tools = [
-  'React', 'JavaScript', 'Node.js', 'Express', 'MongoDB', 'MySQL', 'Python', 'Java',
-  'Figma', 'Photoshop', 'Illustrator', 'Canva', 'Git', 'VS Code', 'Vocals', 'Songwriting',
+// Roles held, newest focus first as given. `art` picks the illustration.
+export const experience = [
+  { id: 'leo', role: 'President', org: 'Leo Club of Kathmandu Natural', kind: 'Leadership', art: 'crown', color: 'var(--yellow)' },
+  { id: 'rotaract', role: 'Secretary', org: 'Rotaract Club of Kathmandu Height', kind: 'Leadership', art: 'people', color: 'var(--coral)' },
+  { id: 'csit', role: 'Secretary & Partnership Lead', org: 'CSIT Association of Nepal', kind: 'Community', art: 'building', color: 'var(--mint)' },
+  { id: 'codeit', role: 'Full Stack Developer Intern', org: 'Code IT', kind: 'Engineering', art: 'laptop', color: 'var(--blue)' },
+  { id: 'surox', role: 'Frontend Developer & Graphics Designer', org: 'Surox Technology', kind: 'Design + Code', art: 'palette', color: 'var(--coral)' },
 ];
 
 // PLACEHOLDER projects
@@ -242,7 +262,7 @@ export const projects = [
     description:
       'Five songs arranged and recorded as a creative experiment. Cover art and visualisers were designed to match the mood of each track.',
     tags: ['Vocals', 'Recording', 'Cover art'],
-    accent: 'var(--ink)',
+    accent: 'var(--mint)',
     live: '#',
     code: '#',
   },
@@ -278,7 +298,7 @@ export const projects = [
     description:
       'A multi-page animated portfolio with page transitions, scroll-driven chapters and a data-driven structure that is easy to edit.',
     tags: ['React', 'Framer Motion', 'Vite'],
-    accent: 'var(--ink)',
+    accent: 'var(--yellow)',
     live: '#',
     code: '#',
   },

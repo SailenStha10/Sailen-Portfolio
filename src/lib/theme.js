@@ -5,14 +5,14 @@ const storage = safeStorage('local');
 
 const initial = () => {
   const saved = storage.get(KEY);
-  return saved === 'light' || saved === 'dark' ? saved : 'dark';
+  return saved === 'light' || saved === 'dark' ? saved : 'light';
 };
 
 export const themeStore = createStore(initial());
 
 const apply = (theme) => {
   document.documentElement.dataset.theme = theme;
-  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#f2ead6' : '#050505');
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#f5efe3' : '#121212');
 };
 
 /** Call once on startup. */

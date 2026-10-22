@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import PixelSprite from '../../components/ui/PixelSprite';
+import Icon from '../../components/ui/Icon';
 import { LEGS_A, PLAYER_BODY, PROPS } from '../../lib/sprites';
 import { characters } from '../../data/site';
 import { gameStore } from '../../lib/achievements';
 import { useStore } from '../../lib/store';
 import { sound } from '../../lib/sound';
 
-/** "Choose your character" screen. ← → to browse, Enter to confirm. */
+/** "Choose your character" screen. Click a card, or use ← → and Enter. */
 export default function CharacterSelect({ onSelect }) {
   const [focus, setFocus] = useState(0);
   const progress = useStore(gameStore);
@@ -41,8 +42,8 @@ export default function CharacterSelect({ onSelect }) {
       transition={{ duration: 0.4 }}
       aria-label="Choose your character"
     >
-      <p className="select__banner">
-        <span>1P</span> CHOOSE YOUR CHARACTER <em>← → to browse · Enter to start</em>
+      <p className="select__hint">
+        Click a character to play · <kbd>←</kbd> <kbd>→</kbd> to browse · <kbd>Enter</kbd> to start
       </p>
 
       <div className="select__grid">
@@ -53,7 +54,7 @@ export default function CharacterSelect({ onSelect }) {
             <motion.button
               key={ch.id}
               type="button"
-              className={`char px-box ${focused ? 'is-focus' : ''} ${done ? 'is-done' : ''}`}
+              className={`char ${focused ? 'is-focus' : ''}`}
               style={{ '--accent': ch.accent }}
               onMouseEnter={() => setFocus(i)}
               onFocus={() => setFocus(i)}
@@ -66,8 +67,8 @@ export default function CharacterSelect({ onSelect }) {
               transition={{ delay: 0.1 + i * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
               aria-label={`Play as ${ch.name}`}
             >
-              {done && <span className="char__done">✓ CLEARED · BEST {progress[ch.id].best}</span>}
               <span className="char__stage">
+                {done && <span className="char__done">✓ Cleared · best {progress[ch.id].best}</span>}
                 <PixelSprite
                   rows={PLAYER_BODY}
                   legs={LEGS_A}
@@ -75,35 +76,35 @@ export default function CharacterSelect({ onSelect }) {
                   accent={ch.accent}
                   className="char__sprite"
                 />
-                <i className="char__pad" aria-hidden="true" />
               </span>
-              <span className="char__name">{ch.name}</span>
-              <span className="char__tag">{ch.tagline}</span>
+              <span className="char__body">
+                <span className="char__name">{ch.name}</span>
+                <span className="char__tag">{ch.tagline}</span>
 
-              <span className="char__stats">
-                {Object.entries(ch.stats)
-                  .slice(0, 4)
-                  .map(([k, v]) => (
-                    <span key={k}>
-                      <b>{k}</b>
-                      <span className="char__blocks">
-                        {Array.from({ length: 10 }, (_, n) => (
-                          <i key={n} className={n < v ? 'is-on' : ''} />
-                        ))}
+                <span className="char__stats">
+                  {Object.entries(ch.stats)
+                    .slice(0, 4)
+                    .map(([k, v]) => (
+                      <span key={k}>
+                        <b>{k.charAt(0) + k.slice(1).toLowerCase()}</b>
+                        <span className="char__bar">
+                          <i style={{ width: `${v * 10}%` }} />
+                        </span>
                       </span>
+                    ))}
+                </span>
+
+                <span className="char__unlocks">
+                  {ch.checkpoints.map((c) => (
+                    <span key={c.skill} className="chip">
+                      {c.skill}
                     </span>
                   ))}
+                </span>
+                <span className="char__cta">
+                  Play as {ch.short} <Icon name="arrow" size={18} />
+                </span>
               </span>
-
-              <span className="char__unlocks">
-                <small>UNLOCKS</small>
-                {ch.checkpoints.map((c) => (
-                  <span key={c.skill} className="chip">
-                    {c.skill}
-                  </span>
-                ))}
-              </span>
-              <span className="char__cta">{focused ? '▶ PRESS START' : 'SELECT'}</span>
             </motion.button>
           );
         })}

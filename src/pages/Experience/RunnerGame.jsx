@@ -2,11 +2,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import PixelSprite from '../../components/ui/PixelSprite';
+import Icon from '../../components/ui/Icon';
 import { HEART } from '../../lib/sprites';
 import { RunnerEngine, readColors } from '../../lib/game/engine';
 import { recordRun, unlock, gameStore } from '../../lib/achievements';
 import { themeStore } from '../../lib/theme';
-import { visitorStore } from '../../lib/session';
 import { useStore } from '../../lib/store';
 import { sound } from '../../lib/sound';
 
@@ -29,7 +29,6 @@ export default function RunnerGame({ character, onBack }) {
   const timers = useRef({});
   const statusRef = useRef('ready');
   const progress = useStore(gameStore);
-  const visitor = useStore(visitorStore);
 
   const [status, setStatus] = useState('ready'); // ready | playing | done
   const [score, setScore] = useState(0);
@@ -69,12 +68,12 @@ export default function RunnerGame({ character, onBack }) {
         onHit: () => {
           sound.play('deny');
           setFlash((f) => f + 1);
-          showTemporarily(setNotice, 'OUCH! BACK TO CHECKPOINT', 1400);
+          showTemporarily(setNotice, 'Ouch! Back to the last checkpoint', 1400);
         },
         onGameOver: () => {
           sound.play('error');
           setFlash((f) => f + 1);
-          showTemporarily(setNotice, 'OUT OF LIVES — LIVES RESTORED', 1800);
+          showTemporarily(setNotice, 'Out of lives — restored, keep going!', 1800);
         },
         onFinish: ({ score: final }) => {
           sound.play('levelup');
@@ -185,13 +184,12 @@ export default function RunnerGame({ character, onBack }) {
       transition={{ duration: 0.4 }}
       aria-label={`${character.name} level`}
     >
-      <div className="rg__hud px-box">
-        <button type="button" className="rg__back" onClick={onBack}>
-          ◀ CHANGE
+      <div className="rg__hud">
+        <button type="button" className="btn btn--ghost rg__back" onClick={onBack}>
+          <Icon name="back" size={16} /> Change character
         </button>
         <span className="rg__who">
-          {visitor ? `${visitor.toUpperCase()} as ` : ''}
-          {character.name.toUpperCase()}
+          {character.name}
         </span>
         <span className="rg__lives" aria-label={`${lives} lives left`}>
           {[0, 1, 2].map((i) => (
@@ -200,17 +198,17 @@ export default function RunnerGame({ character, onBack }) {
             </span>
           ))}
         </span>
-        <span>
-          SKILLS <b>{unlocked.length}</b>/{character.checkpoints.length}
+        <span className="rg__stat">
+          Skills <b>{unlocked.length}</b>/{character.checkpoints.length}
         </span>
-        <span>
-          SCORE <b>{String(score).padStart(4, '0')}</b>
+        <span className="rg__stat">
+          Score <b>{String(score).padStart(4, '0')}</b>
         </span>
-        <span className="rg__best">BEST {String(best).padStart(4, '0')}</span>
+        <span className="rg__stat rg__best">Best {String(best).padStart(4, '0')}</span>
       </div>
 
       <div className="rg__layout">
-        <div className="rg__stage px-box">
+        <div className="rg__stage">
           {flash > 0 && <span key={flash} className="rg__flash" aria-hidden="true" />}
           <canvas
             ref={canvasRef}
@@ -222,10 +220,10 @@ export default function RunnerGame({ character, onBack }) {
 
           <AnimatePresence>
             {status === 'ready' && (
-              <motion.div className="rg__ready" exit={{ opacity: 0 }}>
-                <p className="rg__ready-title">READY?</p>
+              <motion.div className="rg__overlay" exit={{ opacity: 0 }}>
+                <p className="rg__overlay-title">Ready?</p>
                 <p>
-                  Run to every <b>flag</b> to unlock a skill. Dodge the cacti — duck the birds.
+                  Run to every <b>flag</b> to unlock a skill. Jump over the cacti, duck under the birds.
                 </p>
                 <div className="rg__keys">
                   <span>
@@ -240,7 +238,15 @@ export default function RunnerGame({ character, onBack }) {
                     <kbd>↓</kbd> duck
                   </span>
                 </div>
-                <p className="rg__ready-hint">press any arrow to start</p>
+                <button
+                  type="button"
+                  className="btn btn--violet btn--lg"
+                  onClick={() => {
+                    updateStatus('playing');
+                  }}
+                >
+                  Start running
+                </button>
               </motion.div>
             )}
           </AnimatePresence>
@@ -250,12 +256,12 @@ export default function RunnerGame({ character, onBack }) {
               <motion.div
                 key={banner.key}
                 className="rg__banner"
-                initial={{ opacity: 0, y: -20, scale: 0.8 }}
+                initial={{ opacity: 0, y: -20, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -20 }}
                 role="status"
               >
-                <small>★ SKILL UNLOCKED +100</small>
+                <small>Skill unlocked · +100</small>
                 <strong>{banner.skill}</strong>
                 <em>{banner.note}</em>
               </motion.div>
@@ -272,11 +278,10 @@ export default function RunnerGame({ character, onBack }) {
 
           <AnimatePresence>
             {status === 'done' && (
-              <motion.div className="rg__done" initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }}>
-                <p className="rg__done-kicker">★ LEVEL COMPLETE ★</p>
-                <h2>All skills unlocked</h2>
-                <p className="rg__done-score">
-                  SCORE <b>{score}</b>
+              <motion.div className="rg__overlay rg__overlay--done" initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }}>
+                <p className="rg__overlay-title">Level complete 🎉</p>
+                <p>
+                  All skills unlocked · score <b>{score}</b>
                 </p>
                 <div className="rg__done-chips">
                   {character.checkpoints.map((c) => (
@@ -286,14 +291,14 @@ export default function RunnerGame({ character, onBack }) {
                   ))}
                 </div>
                 <div className="rg__done-actions">
-                  <button type="button" className="btn" onClick={restart}>
-                    ↻ Play again
+                  <button type="button" className="btn btn--ghost" onClick={restart}>
+                    Play again
                   </button>
                   <button type="button" className="btn btn--ghost" onClick={onBack}>
                     Another character
                   </button>
-                  <Link to="/skills" className="btn btn--orange">
-                    Next: Skills ▶
+                  <Link to="/skills" className="btn btn--violet">
+                    Next: Skills <Icon name="arrow" size={16} />
                   </Link>
                 </div>
               </motion.div>
@@ -301,28 +306,30 @@ export default function RunnerGame({ character, onBack }) {
           </AnimatePresence>
         </div>
 
-        <ol className="rg__tree px-box" aria-label="Skills to unlock">
-          <li className="rg__tree-title">■ SKILL TREE</li>
-          {character.checkpoints.map((cp, i) => {
-            const open = unlocked.includes(i);
-            return (
-              <motion.li
-                key={cp.skill}
-                className={open ? 'is-open' : ''}
-                animate={open ? { scale: [1.12, 1] } : { scale: 1 }}
-                transition={{ duration: 0.35 }}
-              >
-                <span className="rg__tree-icon" aria-hidden="true">
-                  {open ? '✓' : '×'}
-                </span>
-                <span>
-                  <strong>{open ? cp.skill : '???'}</strong>
-                  <em>{open ? `${cp.note} · ${cp.year}` : 'Reach the next flag'}</em>
-                </span>
-              </motion.li>
-            );
-          })}
-        </ol>
+        <aside className="rg__tree card" aria-label="Skills to unlock">
+          <h2>Skills to unlock</h2>
+          <ol>
+            {character.checkpoints.map((cp, i) => {
+              const open = unlocked.includes(i);
+              return (
+                <motion.li
+                  key={cp.skill}
+                  className={open ? 'is-open' : ''}
+                  animate={open ? { scale: [1.06, 1] } : { scale: 1 }}
+                  transition={{ duration: 0.35 }}
+                >
+                  <span className="rg__tree-icon" aria-hidden="true">
+                    {open ? '✓' : i + 1}
+                  </span>
+                  <span>
+                    <strong>{open ? cp.skill : 'Locked'}</strong>
+                    <em>{open ? `${cp.note} · ${cp.year}` : 'Reach the next flag'}</em>
+                  </span>
+                </motion.li>
+              );
+            })}
+          </ol>
+        </aside>
       </div>
 
       <div className="rg__pad" aria-label="Touch controls">
@@ -336,7 +343,7 @@ export default function RunnerGame({ character, onBack }) {
           ▼
         </button>
         <button type="button" className="rg__jump" onPointerDown={tapJump} aria-label="Jump">
-          JUMP
+          Jump
         </button>
       </div>
     </motion.section>

@@ -1,11 +1,7 @@
 import { createStore } from './store';
 
-/**
- * Login state lives in memory only: reloading the page always starts a fresh session,
- * so every visitor signs in at the terminal first.
- */
-export const sessionStore = createStore(false);
-/** The name the visitor typed at "login as:". */
+/** There is no sign-in any more; the shell still reads this flag, so it stays `true`. */
+export const sessionStore = createStore(true);
 export const visitorStore = createStore('');
 
 export function login() {

@@ -72,12 +72,12 @@ export function readColors(accentVar) {
   const get = (name, fallback) => styles.getPropertyValue(name).trim() || fallback;
   const resolve = (v) => {
     const m = /var\((--[\w-]+)\)/.exec(v ?? '');
-    return m ? get(m[1], '#96e0f7') : v;
+    return m ? get(m[1], '#9a8cff') : v;
   };
-  const ink = get('--ink', '#f2ecda');
-  const bg = get('--bg', '#050505');
-  const bg2 = get('--bg-2', '#0e0e0e');
-  return { ink, bg, bg2, cyan: get('--cyan', '#96e0f7'), orange: get('--orange', '#f89d51'), accent: resolve(accentVar) };
+  const ink = get('--ink', '#f4f0e8');
+  const bg = get('--bg', '#100e1a');
+  const bg2 = get('--bg-2', '#1a1729');
+  return { ink, bg, bg2, cyan: get('--cyan', '#9a8cff'), orange: get('--orange', '#ff7a5c'), accent: resolve(accentVar) };
 }
 
 /** Deterministic level: checkpoints every CHECK_SPACING units, obstacles in between. */
@@ -332,10 +332,7 @@ export class RunnerEngine {
     ctx.clearRect(0, 0, W, WORLD_H);
 
     // sky + stars
-    const sky = ctx.createLinearGradient(0, 0, 0, WORLD_H);
-    sky.addColorStop(0, c.bg);
-    sky.addColorStop(1, mix(c.bg, c.accent, 0.14));
-    ctx.fillStyle = sky;
+    ctx.fillStyle = mix(c.bg, c.accent, 0.1);
     ctx.fillRect(0, 0, W, WORLD_H);
     ctx.fillStyle = mix(c.bg, c.ink, 0.35);
     for (let i = 0; i < 40; i += 1) {
@@ -384,7 +381,7 @@ export class RunnerEngine {
 
   drawCheckpoints() {
     const { ctx, colors: c } = this;
-    ctx.font = '20px VT323, monospace';
+    ctx.font = '700 14px Manrope, system-ui, sans-serif';
     ctx.textAlign = 'center';
     this.level.checkpoints.forEach((cp, i) => {
       const sx = cp.x - this.camX;

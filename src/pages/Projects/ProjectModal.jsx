@@ -1,44 +1,48 @@
 import { motion } from 'framer-motion';
+import Icon from '../../components/ui/Icon';
+import Art, { ART_FOR } from '../../components/ui/Art';
 
+/** Side drawer with the full project details. Click outside or press Esc to close. */
 export default function ProjectModal({ project, onClose }) {
   return (
     <motion.div
-      className="modal"
+      className="drawer"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
-      <motion.div
-        className="modal__card px-box"
+      <motion.aside
+        className="drawer__panel"
         style={{ '--accent': project.accent }}
         role="dialog"
         aria-modal="true"
         aria-label={project.title}
-        initial={{ y: 80, scale: 0.92, opacity: 0 }}
-        animate={{ y: 0, scale: 1, opacity: 1 }}
-        exit={{ y: 60, scale: 0.95, opacity: 0 }}
-        transition={{ type: 'spring', stiffness: 260, damping: 26 }}
+        initial={{ x: '100%' }}
+        animate={{ x: 0 }}
+        exit={{ x: '100%' }}
+        transition={{ type: 'spring', stiffness: 300, damping: 34 }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="modal__cover">
+        <div className="drawer__cover">
           <span className="project__cat">{project.category}</span>
-          <button type="button" className="modal__close" onClick={onClose} aria-label="Close">
-            [X] CLOSE
+          <Art name={ART_FOR[project.category]} className="drawer__art" />
+          <button type="button" className="drawer__close" onClick={onClose} aria-label="Close details">
+            <Icon name="close" size={20} />
           </button>
         </div>
-        <div className="modal__body">
+        <div className="drawer__body">
           <h2>{project.title}</h2>
-          <p>{project.description}</p>
-          <ul className="modal__tags">
+          <p className="hl">{project.summary}</p>
+          <ul className="drawer__tags">
             {project.tags.map((t) => (
               <li key={t} className="chip">
                 {t}
               </li>
             ))}
           </ul>
-          <div className="modal__actions">
-            <a className="btn" href={project.live} target="_blank" rel="noreferrer noopener">
+          <div className="drawer__actions">
+            <a className="btn btn--violet" href={project.live} target="_blank" rel="noreferrer noopener">
               Live preview ↗
             </a>
             <a className="btn btn--ghost" href={project.code} target="_blank" rel="noreferrer noopener">
@@ -46,7 +50,7 @@ export default function ProjectModal({ project, onClose }) {
             </a>
           </div>
         </div>
-      </motion.div>
+      </motion.aside>
     </motion.div>
   );
 }

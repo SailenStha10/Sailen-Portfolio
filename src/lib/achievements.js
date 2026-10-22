@@ -6,7 +6,6 @@ const storage = safeStorage('local');
 
 /** Every unlockable badge. Order matters only for display. */
 export const ACHIEVEMENTS = {
-  login: { title: 'Access Granted', text: 'Signed in to the terminal' },
   secret: { title: 'Secret Agent', text: 'Found the hidden file' },
   traveller: { title: 'Globetrotter', text: 'Visited every stop on the journey' },
   theme: { title: 'Mood Swing', text: 'Switched the screen colours' },
@@ -40,7 +39,6 @@ export function unlock(id) {
   const next = [...have, id];
   achievementStore.set(next);
   storage.set(KEY, JSON.stringify(next));
-  sound.play('levelup');
 
   const key = (toastKey += 1);
   toastStore.set((t) => [...t, { key, id }]);

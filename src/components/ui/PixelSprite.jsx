@@ -3,7 +3,7 @@ import { PLAYER_BODY as PLAYER_ROWS, LEGS_A as LEGS_A_ROWS, LEGS_B as LEGS_B_ROW
 const PALETTE = {
   h: 'var(--ink)',
   s: '#e9c9a3',
-  e: '#050505',
+  e: '#100e1a',
   p: 'color-mix(in srgb, var(--ink) 55%, var(--bg))',
   g: 'color-mix(in srgb, var(--ink) 70%, var(--bg))',
   c: 'var(--cyan)',

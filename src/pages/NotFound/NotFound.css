@@ -1,21 +1,21 @@
-.not-found {
-  display: grid;
-  align-items: center;
-}
 .not-found__inner {
-  text-align: center;
   display: grid;
-  justify-items: center;
+  justify-items: start;
   gap: 1rem;
+  padding-top: 4vh;
 }
 .not-found__code {
   font-family: var(--font-display);
-  font-weight: 800;
-  font-size: clamp(6rem, 24vw, 14rem);
-  line-height: 1;
-  color: var(--ink);
-  text-shadow: 0 0 30px color-mix(in srgb, var(--cyan) 40%, transparent);
+  font-size: clamp(8rem, 30vw, 20rem);
+  line-height: 0.9;
+  color: var(--coral);
+  -webkit-text-stroke: 3px var(--ink);
 }
-.not-found__btn {
-  margin-top: 1rem;
+.not-found__title {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+}
+.not-found__lead {
+  max-width: 40ch;
+  color: var(--muted);
+  font-size: 1.1rem;
 }

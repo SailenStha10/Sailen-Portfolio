@@ -1,7 +1,7 @@
-# A Colourful Life — Portfolio
+# Sailen — Portfolio
 
 A journey-style portfolio built with **React 18, Vite, React Router and Framer Motion**.
-Black (dark) and cream (light) themes, orange + cyan accents, synthesised sound (no audio files).
+Light (warm paper) and dark themes, solid colours only (blue, coral, yellow, mint — no gradients), synthesised sound (no audio files).
 
 ## The journey
 `Home (terminal) → About (story) → Experience (game) → Skills → Projects → Contact`
@@ -44,6 +44,6 @@ src/
    skill levels, stats, projects, social links).
 2. Add a photo to `public/` and set `profile.photo` (e.g. `'/me.jpg'`).
 3. Add or rename playable characters and their checkpoint skills in `characters` (same file).
-4. Change colours/fonts in `src/styles/tokens.css` (both themes live there). Fonts: Bitcount Prop Single (headings) and VT323 (body), both from Google Fonts.
+4. Change colours/fonts in `src/styles/tokens.css` (both themes live there). Fonts: Anton (tall headings), Instrument Serif italic (highlights), Bricolage Grotesque, DM Sans and JetBrains Mono. Skill logos load from the devicon CDN; roles live in `experience` in the same file.
 
 The contact form has no backend: it opens the visitor's mail app addressed to `profile.email`.

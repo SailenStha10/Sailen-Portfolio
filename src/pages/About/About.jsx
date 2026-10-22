@@ -1,69 +1,51 @@
 import { Link } from 'react-router-dom';
-import Chapter from './Chapter';
-import Countdown from './Countdown';
 import IdCard from './IdCard';
-import Marquee from '../../components/ui/Marquee';
+import ScrollText from './ScrollText';
+import Points from './Points';
+import Walk from './Walk';
+import PageHeader from '../../components/ui/PageHeader';
 import Reveal from '../../components/ui/Reveal';
-import { useMediaQuery } from '../../hooks/useMediaQuery';
-import { chapters, profile } from '../../data/site';
+import { chapters } from '../../data/site';
 import './About.css';
 
-const credits = [
-  ['Starring', `${profile.name} as everyone`],
-  ['Cast', 'The Student · Developer'],
-  ['', 'Designer · Singer'],
-  ['Directed by', 'Curiosity'],
-  ['Written in', 'React · Node.js'],
-  ['Designed in', 'Figma · Illustrator'],
-  ['Music by', 'A microphone'],
-  ['Catering', 'Chai, endless'],
-  ['No bugs were harmed', '(some were fixed)'],
-];
+const STATEMENT = chapters.map((c) => c.quote).join(' ');
 
 export default function About() {
-  const wide = useMediaQuery('(min-width: 901px) and (min-height: 640px)');
-  const calm = useMediaQuery('(prefers-reduced-motion: reduce)');
-  const pinned = wide && !calm;
-
   return (
-    <main className="about">
-      <Countdown pinned={pinned} />
+    <main className="page about">
+      <PageHeader
+        eyebrow="About"
+        title={
+          <>
+            Five characters, <span className="hl">one</span> person.
+          </>
+        }
+      />
 
       <IdCard />
 
-      <Marquee className="marquee--film" items={['ACTION', 'CAMERA', 'ROLL', 'CUT', 'PRINT IT']} />
+      <ScrollText text={STATEMENT} />
 
-      {chapters.map((chapter, i) => (
-        <Chapter key={chapter.id} chapter={chapter} index={i} total={chapters.length} pinned={pinned} />
-      ))}
+      <Walk />
 
-      <section className="finale container" aria-labelledby="finale-title">
-        <Reveal direction="none">
-          <p className="finale__kicker">— FADE OUT —</p>
-        </Reveal>
-        <Reveal>
-          <h2 id="finale-title" className="finale__title">
-            The End?
-          </h2>
-        </Reveal>
-        <Reveal delay={0.1} className="finale__roll px-box">
-          <ul aria-label="Credits">
-            {credits.map(([k, v]) => (
-              <li key={k}>
-                <span>{k}</span>
-                <b>{v}</b>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-        <Reveal delay={0.2} className="finale__actions">
-          <Link to="/experience" className="btn">
-            ▶ Play the journey
-          </Link>
-          <Link to="/projects" className="btn btn--ghost">
-            See the work
-          </Link>
-        </Reveal>
+      <Points />
+
+      <section className="finale band band--ink">
+        <div className="container finale__inner">
+          <Reveal>
+            <h2>
+              Now <span className="hl">play</span> it.
+            </h2>
+            <div className="finale__actions">
+              <Link to="/experience" className="btn btn--lg">
+                See my experience
+              </Link>
+              <Link to="/projects" className="btn btn--ghost btn--lg">
+                See the work
+              </Link>
+            </div>
+          </Reveal>
+        </div>
       </section>
     </main>
   );

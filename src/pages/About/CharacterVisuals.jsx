@@ -2,14 +2,6 @@ import { motion } from 'framer-motion';
 import PixelSprite from '../../components/ui/PixelSprite';
 import { LEGS_A, LEGS_B, PLAYER_BODY, PROPS } from '../../lib/sprites';
 
-const FLOATERS = {
-  student: ['?', 'A+', '</>', '♪'],
-  dev: ['</>', '{ }', '&&', '#'],
-  designer: ['◆', '●', '▲', 'Aa'],
-  singer: ['♪', '♫', '♪', '♬'],
-  all: ['</>', '◆', '♪', '★'],
-};
-
 const SOLO = {
   student: { prop: 'book', accent: 'var(--orange)' },
   dev: { prop: 'laptop', accent: 'var(--cyan)' },
@@ -25,21 +17,8 @@ const TRIO = [
 
 /** A scene's pixel-art cast member with drifting symbols around them. */
 export default function CharacterVisual({ kind }) {
-  const floaters = FLOATERS[kind];
-
   return (
     <div className={`cv cv--${kind}`}>
-      {floaters.map((symbol, i) => (
-        <span
-          key={`${symbol}-${i}`}
-          className="cv__floater"
-          style={{ left: `${12 + i * 22}%`, animationDelay: `${i * 1.1}s` }}
-          aria-hidden="true"
-        >
-          {symbol}
-        </span>
-      ))}
-
       {kind === 'all' ? (
         <div className="cv__trio">
           {TRIO.map((c, i) => (

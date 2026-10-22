@@ -2,15 +2,18 @@
  * Tiny synthesised sound engine (Web Audio). No audio files needed.
  * The AudioContext is created lazily inside a user gesture (enable()), which satisfies
  * browser autoplay rules. The preference is remembered in localStorage.
+ *
+ * Only three kinds of sound exist: clicks, a soft tick while scrolling, and the game's own
+ * effects. There is no background music or ambience.
  */
+
+const ALLOWED = new Set(['click', 'scroll', 'select', 'coin', 'deny', 'error', 'levelup']);
 
 const STORAGE_KEY = 'portfolio-sound';
 
 let ctx = null;
 let master = null;
-let ambient = null;
 let enabled = false;
-let lastHover = 0;
 const listeners = new Set();
 
 const read = () => {
@@ -118,6 +121,7 @@ const effects = {
     );
   },
   tick: () => tone({ freq: 880, type: 'sine', dur: 0.09, vol: 0.06 }),
+  scroll: () => tone({ freq: 420 + Math.random() * 120, type: 'triangle', dur: 0.05, vol: 0.022 }),
   clap: () => {
     noiseSweep({ from: 2500, to: 900, dur: 0.12, vol: 0.18 });
     tone({ freq: 120, to: 50, type: 'sine', dur: 0.15, vol: 0.12 });
@@ -131,50 +135,6 @@ const effects = {
     tone({ freq: 80, to: 900, type: 'sawtooth', dur: 1.0, vol: 0.035 });
   },
 };
-
-function startAmbient() {
-  if (!ctx || ambient) return;
-  const t = ctx.currentTime;
-  const out = ctx.createGain();
-  out.gain.setValueAtTime(0.0001, t);
-  out.gain.exponentialRampToValueAtTime(0.05, t + 3);
-  const filter = ctx.createBiquadFilter();
-  filter.type = 'lowpass';
-  filter.frequency.value = 420;
-  const lfo = ctx.createOscillator();
-  const lfoGain = ctx.createGain();
-  lfo.frequency.value = 0.12;
-  lfoGain.gain.value = 160;
-  lfo.connect(lfoGain).connect(filter.frequency);
-  const oscs = [55, 82.41, 110.5].map((f, i) => {
-    const o = ctx.createOscillator();
-    o.type = i === 0 ? 'sine' : 'sawtooth';
-    o.frequency.value = f;
-    o.connect(filter);
-    o.start();
-    return o;
-  });
-  lfo.start();
-  filter.connect(out).connect(master);
-  // sparse pentatonic plucks over the drone, like a film score
-  const scale = [220, 261.63, 329.63, 392, 440, 523.25];
-  const plucks = setInterval(() => {
-    tone({ freq: scale[Math.floor(Math.random() * scale.length)], type: 'triangle', dur: 1.4, vol: 0.018 });
-  }, 2200);
-  ambient = { out, oscs, lfo, plucks };
-}
-
-function stopAmbient() {
-  if (!ambient || !ctx) return;
-  const { out, oscs, lfo, plucks } = ambient;
-  clearInterval(plucks);
-  const t = ctx.currentTime;
-  out.gain.cancelScheduledValues(t);
-  out.gain.setValueAtTime(Math.max(out.gain.value, 0.0001), t);
-  out.gain.exponentialRampToValueAtTime(0.0001, t + 0.6);
-  [...oscs, lfo].forEach((o) => o.stop(t + 0.7));
-  ambient = null;
-}
 
 export const sound = {
   /** true when the visitor previously chose sound (still needs a gesture to start). */
@@ -191,13 +151,11 @@ export const sound = {
     if (c.state === 'suspended') c.resume();
     enabled = true;
     write('on');
-    startAmbient();
     emit();
   },
   disable() {
     enabled = false;
     write('off');
-    stopAmbient();
     emit();
   },
   toggle() {
@@ -206,11 +164,7 @@ export const sound = {
     if (enabled) effects.click();
   },
   play(name) {
-    if (name === 'hover') {
-      const now = performance.now();
-      if (now - lastHover < 60) return;
-      lastHover = now;
-    }
+    if (!ALLOWED.has(name)) return;
     effects[name]?.();
   },
   subscribe(fn) {
@@ -221,19 +175,33 @@ export const sound = {
 
 const INTERACTIVE = 'a, button, [role="tab"], input, textarea';
 
-/** Adds hover ticks and click blips to every interactive element via delegation. */
+/**
+ * Click blips on every interactive element, a soft tick while scrolling, and the first-gesture
+ * switch-on (sound starts enabled unless the visitor turned it off before).
+ */
 export function installGlobalSfx() {
-  const onOver = (e) => {
-    const el = e.target.closest?.(INTERACTIVE);
-    if (el && !el.contains(e.relatedTarget)) sound.play('hover');
+  const wake = () => {
+    if (!enabled && read() !== 'off') sound.enable();
   };
   const onClick = (e) => {
+    wake();
     if (e.target.closest?.(INTERACTIVE)) sound.play('click');
   };
-  document.addEventListener('mouseover', onOver);
+  let lastY = window.scrollY;
+  const onScroll = () => {
+    if (Math.abs(window.scrollY - lastY) > 240) {
+      lastY = window.scrollY;
+      sound.play('scroll');
+    }
+  };
   document.addEventListener('click', onClick);
+  document.addEventListener('keydown', wake);
+  document.addEventListener('touchend', wake, { passive: true });
+  window.addEventListener('scroll', onScroll, { passive: true });
   return () => {
-    document.removeEventListener('mouseover', onOver);
     document.removeEventListener('click', onClick);
+    document.removeEventListener('keydown', wake);
+    document.removeEventListener('touchend', wake);
+    window.removeEventListener('scroll', onScroll);
   };
 }

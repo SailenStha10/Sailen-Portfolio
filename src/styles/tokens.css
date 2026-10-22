@@ -1,54 +1,85 @@
 /*
- * Two themes only: black (dark) and cream (light). Accents are orange + cyan.
- * Everything else in the codebase uses these variables, so the theme toggle is free.
+ * Solid colours only — no gradients. Mostly paper and ink, with a few muted accents
+ * (navy, coral, sand, sage) used sparingly. Light and dark themes.
  */
 :root,
-:root[data-theme='dark'] {
-  color-scheme: dark;
-  --bg: #050505;
-  --bg-2: #0e0e0e;
-  --ink: #f2ecda;
-
-  --cyan: #96e0f7;
-  --orange: #f89d51;
-  --on-accent: #050505;
-
-  --dot-rgb: 150, 224, 247;
-  --glow: 0 0 14px rgba(150, 224, 247, 0.4);
-  --scan: rgba(0, 0, 0, 0.18);
-  --vignette: rgba(0, 0, 0, 0.55);
-  --grain: 0.09;
-}
-
 :root[data-theme='light'] {
   color-scheme: light;
-  --bg: #f2ead6;
-  --bg-2: #faf4e3;
-  --ink: #131313;
+  --bg: #f4eee2; /* warm paper */
+  --bg-2: #fffcf5; /* cards */
+  --bg-3: #e9e1d0; /* sunken areas */
+  --ink: #151827; /* navy-black: tinted, never pure black */
 
-  --cyan: #0b6a85;
-  --orange: #bf560a;
-  --on-accent: #f2ead6;
+  --blue: #2d3a6b; /* navy */
+  --coral: #d4482d; /* the single warm accent */
+  --yellow: #ebdfb8; /* sand */
+  --mint: #9cbfae; /* sage */
+  --on-accent: #ffffff;
+  --on-coral: #ffffff;
+  --on-yellow: #151827;
+  --deep: #151827; /* dark bands */
+  --on-deep: #f4eee2;
+  --tile: #fffcf5;
 
-  --dot-rgb: 11, 106, 133;
-  --glow: none;
-  --scan: rgba(60, 40, 0, 0.05);
-  --vignette: rgba(90, 60, 10, 0.18);
-  --grain: 0.13;
+  --dot-rgb: 45, 58, 107;
+  --shadow: 0 1px 2px rgb(21 24 39 / 7%);
+  --shadow-lg: 0 20px 44px -20px rgb(21 24 39 / 32%);
+}
+
+/*
+ * Dark theme: the same palette moved into the night. The paper becomes deep navy (not grey),
+ * the ink becomes warm cream, and each accent is lifted so it keeps its contrast against the dark.
+ * Navy and coral stay a complementary pair; sand and sage stay the quiet supporting tones.
+ */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0f1221;
+  --bg-2: #171b30;
+  --bg-3: #1f2440;
+  --ink: #f0e9db;
+
+  --blue: #4a5bd0;
+  --coral: #f08a6e;
+  --yellow: #d9c995;
+  --mint: #88c4aa;
+  --on-accent: #ffffff;
+  --on-coral: #171b30;
+  --on-yellow: #151827;
+  --deep: #080a15;
+  --on-deep: #f0e9db;
+  --tile: #fffcf5;
+
+  --dot-rgb: 74, 91, 208;
+  --shadow: 0 1px 2px rgb(0 0 0 / 40%);
+  --shadow-lg: 0 24px 50px -22px rgb(0 0 0 / 75%);
 }
 
 :root {
-  --muted: color-mix(in srgb, var(--ink) 64%, transparent);
-  --faint: color-mix(in srgb, var(--ink) 14%, transparent);
-  --cyan-soft: color-mix(in srgb, var(--cyan) 10%, transparent);
-  --line: color-mix(in srgb, var(--cyan) 40%, transparent);
-  --accent: var(--cyan);
+  /* legacy names still used across the code base */
+  --violet: var(--blue);
+  --sun: var(--yellow);
+  --cyan: var(--blue);
+  --orange: var(--coral);
 
-  --font-display: 'Bitcount Prop Single', 'Courier New', monospace;
-  --font-body: 'VT323', 'Courier New', monospace;
-  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --muted: color-mix(in srgb, var(--ink) 66%, var(--bg));
+  --faint: color-mix(in srgb, var(--ink) 10%, var(--bg));
+  --line: color-mix(in srgb, var(--ink) 16%, var(--bg));
+  --edge: color-mix(in srgb, var(--ink) 26%, var(--bg));
+  --violet-soft: color-mix(in srgb, var(--blue) 14%, var(--bg-2));
+  --coral-soft: color-mix(in srgb, var(--coral) 16%, var(--bg-2));
+  --accent: var(--blue);
 
-  --px: 6px; /* size of the stepped pixel corners */
-  --nav-h: 72px;
+  --font-display: 'Anton', 'Impact', 'Arial Narrow', sans-serif; /* tall poster face */
+  --font-head: 'Bricolage Grotesque', 'Manrope', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', 'Times New Roman', serif; /* italic highlights */
+  --font-body: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-label: 'Manrope', system-ui, sans-serif; /* small uppercase labels */
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --r-sm: 10px;
+  --r: 16px;
+  --r-lg: 26px;
+  --topbar-h: 68px;
+  --dock-h: 0px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }

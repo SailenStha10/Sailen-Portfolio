@@ -1,16 +1,12 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { navLinks } from '../../data/site';
 import { travelStore } from '../../lib/travel';
 import { useStore } from '../../lib/store';
 
-const RAYS = Array.from({ length: 56 }, (_, i) => ({
-  angle: (i * 360) / 56 + ((i * 7) % 5),
-  delay: ((i * 37) % 10) / 40,
-  length: 28 + ((i * 53) % 40),
-}));
-
-/** Full-screen "hyperspace" overlay shown while travelling between pages. */
+/** Short "heading to…" overlay shown while a terminal command moves you to another page. */
 export default function Warp() {
   const { active, to } = useStore(travelStore);
+  const label = navLinks.find((l) => l.to === to)?.label ?? to;
 
   return (
     <AnimatePresence>
@@ -20,25 +16,13 @@ export default function Warp() {
           role="status"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, transition: { duration: 0.4 } }}
-          transition={{ duration: 0.25 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
         >
-          <div className="warp__rays" aria-hidden="true">
-            {RAYS.map((r, i) => (
-              <i
-                key={i}
-                style={{
-                  '--a': `${r.angle}deg`,
-                  '--len': `${r.length}vmax`,
-                  animationDelay: `${r.delay}s`,
-                }}
-              />
-            ))}
-          </div>
-          <p className="warp__label">
-            <span>TRAVELLING TO</span>
-            {to === '/' ? '~' : to}
-          </p>
+          <motion.p initial={{ y: 12, scale: 0.96 }} animate={{ y: 0, scale: 1 }} className="warp__label">
+            <small>Heading to</small>
+            {label}
+          </motion.p>
         </motion.div>
       )}
     </AnimatePresence>

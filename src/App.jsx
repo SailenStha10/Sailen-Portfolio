@@ -1,27 +1,23 @@
-import { useEffect, useRef, useState } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { AnimatePresence, MotionConfig } from 'framer-motion';
-import Navbar from './components/layout/Navbar';
+import { Topbar } from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import ScrollProgress from './components/layout/ScrollProgress';
 import PageTransition from './components/layout/PageTransition';
-import Preloader from './components/layout/Preloader';
-import HudOverlay from './components/layout/HudOverlay';
 import TerminalDock from './components/layout/TerminalDock';
 import Warp from './components/layout/Warp';
 import MatrixRain from './components/ui/MatrixRain';
 import { AchievementToasts } from './components/ui/AchievementToasts';
-import DotField from './components/ui/DotField';
 import Home from './pages/Home/Home';
+import Preloader from './components/layout/Preloader';
 import About from './pages/About/About';
 import Experience from './pages/Experience/Experience';
 import Skills from './pages/Skills/Skills';
 import Projects from './pages/Projects/Projects';
 import Contact from './pages/Contact/Contact';
 import NotFound from './pages/NotFound/NotFound';
-import { installGlobalSfx, sound } from './lib/sound';
-import { sessionStore } from './lib/session';
-import { useStore } from './lib/store';
+import { installGlobalSfx } from './lib/sound';
 import { recordVisit, unlock } from './lib/achievements';
 import { runMatrix } from './lib/fx';
 
@@ -38,11 +34,8 @@ const routes = [
 
 export default function App() {
   const location = useLocation();
-  // The "SAILEN PRESENTS" intro plays on every fresh load
   const [booted, setBooted] = useState(false);
-  const loggedIn = useStore(sessionStore);
-  const firstRoute = useRef(true);
-  const onHome = location.pathname === '/';
+  const finishBoot = useCallback(() => setBooted(true), []);
 
   useEffect(() => {
     if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
@@ -64,59 +57,33 @@ export default function App() {
         at = 0;
         unlock('cheat');
         runMatrix(2600);
-        sound.play('grant');
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  // Whoosh on every scene change (not on the very first load)
-  useEffect(() => {
-    if (firstRoute.current) {
-      firstRoute.current = false;
-      return;
-    }
-    sound.play('whoosh');
-  }, [location.pathname]);
-
-  const finishBoot = () => setBooted(true);
-
-  // Everything except the terminal and the 404 needs a login first
-  const isPublic = (path) => path === '/' || path === '*';
-
   return (
     <MotionConfig reducedMotion="user">
-      <DotField />
-      <HudOverlay />
       <Warp />
       <MatrixRain />
       <AchievementToasts />
+
       <AnimatePresence>{!booted && <Preloader key="preloader" onDone={finishBoot} />}</AnimatePresence>
 
       {booted && (
         <>
           <ScrollProgress />
-          <Navbar />
+          <Topbar />
           <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo(0, 0)}>
             <Routes location={location} key={location.pathname}>
               {routes.map(({ path, element }) => (
-                <Route
-                  key={path}
-                  path={path}
-                  element={
-                    isPublic(path) || loggedIn ? (
-                      <PageTransition>{element}</PageTransition>
-                    ) : (
-                      <Navigate to="/" replace />
-                    )
-                  }
-                />
+                <Route key={path} path={path} element={<PageTransition>{element}</PageTransition>} />
               ))}
             </Routes>
           </AnimatePresence>
-          {!onHome && loggedIn && <Footer />}
-          {!onHome && loggedIn && <TerminalDock />}
+          <Footer />
+          <TerminalDock />
         </>
       )}
     </MotionConfig>

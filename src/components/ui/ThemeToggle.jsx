@@ -1,16 +1,17 @@
 import { toggleTheme, themeStore } from '../../lib/theme';
 import { useStore } from '../../lib/store';
 import { unlock } from '../../lib/achievements';
+import Icon from './Icon';
 
-/** Switches between the black (dark) and cream (light) screens. */
+/** Switches between the light and dark themes. */
 export default function ThemeToggle() {
   const theme = useStore(themeStore);
-  const next = theme === 'dark' ? 'cream' : 'black';
+  const next = theme === 'dark' ? 'light' : 'dark';
 
   return (
     <button
       type="button"
-      className="theme-toggle"
+      className="icon-btn"
       onClick={() => {
         toggleTheme();
         unlock('theme');
@@ -18,8 +19,7 @@ export default function ThemeToggle() {
       aria-label={`Switch to ${next} theme`}
       title={`Switch to ${next} theme`}
     >
-      <span aria-hidden="true" className="theme-toggle__icon" />
-      <span className="theme-toggle__label">{theme === 'dark' ? 'BLACK' : 'CREAM'}</span>
+      <Icon name={theme === 'dark' ? 'sun' : 'moon'} size={19} />
     </button>
   );
 }

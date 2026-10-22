@@ -1,24 +1,21 @@
 import { sound } from '../../lib/sound';
 import { useSoundEnabled } from '../../hooks/useSound';
+import Icon from './Icon';
 
-/** Equalizer-style sound switch. */
+/** Speaker icon button. */
 export default function SoundToggle() {
   const on = useSoundEnabled();
 
   return (
     <button
       type="button"
-      className={`sound-toggle ${on ? 'is-on' : ''}`}
+      className="icon-btn"
       onClick={() => sound.toggle()}
       aria-pressed={on}
       aria-label={on ? 'Turn sound off' : 'Turn sound on'}
+      title={on ? 'Sound on' : 'Sound off'}
     >
-      <span className="sound-toggle__bars" aria-hidden="true">
-        {[0, 1, 2, 3, 4].map((i) => (
-          <i key={i} style={{ animationDelay: `${i * 0.13}s` }} />
-        ))}
-      </span>
-      <span className="sound-toggle__label">SOUND {on ? 'ON' : 'OFF'}</span>
+      <Icon name={on ? 'sound' : 'mute'} size={19} />
     </button>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { profile } from '../../data/site';
+import Socials from './Socials';
 
 export default function IdCard() {
   const wrap = useRef(null);
@@ -95,7 +96,7 @@ export default function IdCard() {
             </div>
             <p className="idface__mail">{profile.email}</p>
             <p className="idface__loc">{profile.location}</p>
-            <div className="idface__soc">{profile.socials.map((s) => <span key={s.label}>{s.label}</span>)}</div>
+            <Socials className="idface__soc" />
             <span className="idface__glare" />
           </div>
         </div>

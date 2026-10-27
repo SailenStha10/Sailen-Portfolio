@@ -2,13 +2,17 @@ import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { profile, projects } from '../../data/site';
 import { NavProvider, TLink } from './nav';
+import Socials from './Socials';
 
 const LINKS = [
-  { to: '/work', label: 'Work', count: projects.length },
-  { to: '/services', label: 'Services' },
+  { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
+  { to: '/work', label: 'Work', count: projects.length },
+  { to: '/experience', label: 'Experience' },
+  { to: '/gallery', label: 'Gallery' },
   { to: '/contact', label: 'Contact' },
 ];
+const isActive = (pathname, to) => (to === '/' ? pathname === '/' : pathname.startsWith(to));
 
 function Loader({ onDone, leaving }) {
   const [n, setN] = useState(0);
@@ -32,17 +36,13 @@ function Loader({ onDone, leaving }) {
 
 function Header() {
   const { pathname } = useLocation();
-  const [hidden, setHidden] = useState(false);
   const [solid, setSolid] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    let last = window.scrollY;
     const on = () => {
       const y = window.scrollY;
       setSolid(y > 8);
-      setHidden(y > last && y > 240);
-      last = y;
       const max = document.documentElement.scrollHeight - window.innerHeight;
       document.documentElement.style.setProperty('--progress', max > 0 ? y / max : 0);
     };
@@ -58,12 +58,12 @@ function Header() {
 
   return (
     <>
-      <header className={`hd ${solid ? 'is-solid' : ''} ${hidden && !open ? 'is-hidden' : ''}`}>
+      <header className={`hd ${solid ? 'is-solid' : ''}`}>
         <span className="progress" />
         <TLink className="hd__logo" to="/">©{profile.name}</TLink>
         <nav className="hd__nav" aria-label="Primary">
           {LINKS.map((l) => (
-            <TLink key={l.to} to={l.to} className={pathname.startsWith(l.to) ? 'is-active' : ''}>
+            <TLink key={l.to} to={l.to} className={isActive(pathname, l.to) ? 'is-active' : ''}>
               {l.label}{l.count && <sup>{l.count}</sup>}
             </TLink>
           ))}
@@ -74,7 +74,7 @@ function Header() {
         </button>
       </header>
       <div className={`menu ${open ? 'is-open' : ''}`}>
-        {[{ to: '/', label: 'Home' }, ...LINKS].map((l, i) => (
+        {LINKS.map((l, i) => (
           <TLink key={l.to} to={l.to} style={{ '--i': i }}>{l.label}</TLink>
         ))}
         <a className="menu__mail" href={`mailto:${profile.email}`}>{profile.email}</a>
@@ -88,18 +88,12 @@ function Footer() {
     <footer className="ft">
       <div className="ft__top">
         <TLink to="/contact" className="ft__big">Let’s <em>talk</em> →</TLink>
-        <div className="ft__cols">
-          <nav aria-label="Footer">
-            <b>Pages</b>
-            <TLink to="/">Home</TLink>
-            {LINKS.map((l) => <TLink key={l.to} to={l.to}>{l.label}</TLink>)}
-          </nav>
-          <nav aria-label="Elsewhere">
-            <b>Elsewhere</b>
-            {profile.socials.map((s) => <a key={s.label} href={s.href}>{s.label}</a>)}
-          </nav>
-        </div>
+        <nav className="ft__nav" aria-label="Footer">
+          <b>Pages</b>
+          <div>{LINKS.map((l) => <TLink key={l.to} to={l.to}>{l.label}</TLink>)}</div>
+        </nav>
       </div>
+      <Socials variant="tile" className="ft__soc" />
       <div className="ft__bar">
         <span>© {new Date().getFullYear()} {profile.fullName} · {profile.location}</span>
         <a href="#top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Back to top ↑</a>

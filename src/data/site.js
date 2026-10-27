@@ -8,7 +8,7 @@ export const profile = {
   fullName: 'Sailen Shrestha',
   initial: 'S',
   // Put a photo in /public (e.g. /me.jpg) and set it here to replace the illustrated avatar.
-  photo: '',
+  photo: '/me.jpg',
   email: 'hello@example.com', // PLACEHOLDER — the contact form opens a mail to this address
   location: 'Nepal', // PLACEHOLDER
   roles: [
@@ -52,7 +52,7 @@ export const chapters = [
     accent: 'var(--orange)',
     caption: 'It started with curiosity, a notebook and a song.',
     quote: 'Every story starts with a spark.',
-    meaning: 'A BSc CSIT student who wanted to know how everything works, and then to make it.',
+    meaning: 'A BSc CSIT student who wanted to know how everything works and then to make it.',
     points: ['Curious by default', 'First lines of code', 'Always humming something'],
   },
   {
@@ -65,7 +65,7 @@ export const chapters = [
     accent: 'var(--cyan)',
     caption: 'Then came the late nights, the logic and the craft.',
     quote: 'Late nights. Hard bugs. Steady growth.',
-    meaning: 'Full-stack projects, clean code, and the joy of making something finally work.',
+    meaning: 'Full-stack projects, clean code and the joy of making something finally work.',
     points: ['React & Node.js', 'Databases & APIs', 'Debugging at 2 a.m.'],
   },
   {

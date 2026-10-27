@@ -1,9 +1,13 @@
-import { experience, profile, skillGroups } from '../../data/site';
+import { profile } from '../../data/site';
 import FitLine from '../components/FitLine';
+import IdCard from '../components/IdCard';
 import ReadingText from '../components/ReadingText';
+import Socials from '../components/Socials';
 import { TLink } from '../components/nav';
+import OffClock from '../components/OffClock';
+import ToolHeap from '../components/ToolHeap';
 import useReveal from '../components/useReveal';
-import { VALUES } from '../content';
+import { NOW, OFF_CLOCK, STORY, STORY_LEAD } from '../content';
 
 export default function About() {
   useReveal();
@@ -11,50 +15,51 @@ export default function About() {
     <div className="page">
       <FitLine hero rows={[['About', profile.name]]} />
       <div className="about__grid">
-        <div className="about__portrait" data-reveal>
-          {profile.photo ? <img src={profile.photo} alt={profile.fullName} /> : <span>{profile.initial}</span>}
-        </div>
+        <IdCard />
         <div>
           <ReadingText className="reading--lg" text={`${profile.tagline} I like the point where logic meets taste: a clean API, a tight layout, a song that lands.`} />
           <dl className="facts" data-reveal>
             <div><dt>Based in</dt><dd>{profile.location}</dd></div>
             <div><dt>Studying</dt><dd>BSc CSIT</dd></div>
             <div><dt>Roles</dt><dd>{profile.roles.join(', ')}</dd></div>
-            <div><dt>Elsewhere</dt><dd>{profile.socials.map((s, i) => <span key={s.label}>{i > 0 && ', '}<a href={s.href}>{s.label}</a></span>)}</dd></div>
+            <div><dt>Elsewhere</dt><dd><Socials variant="pill" /></dd></div>
           </dl>
+          <div className="now" data-reveal>
+            <p className="label">Right now</p>
+            <ul>
+              {NOW.map(([k, v]) => <li key={k}><span>{k}</span><b>{v}</b></li>)}
+            </ul>
+          </div>
         </div>
       </div>
 
-      <h2 className="h2" data-reveal>Toolbox</h2>
-      <div className="tools">
-        {skillGroups.map((g, i) => (
-          <div key={g.id} className="tools__group" data-reveal style={{ '--d': `${i * 0.1}s` }}>
-            <h3>{g.word}</h3>
-            <div className="chips">{g.skills.map((s) => <span key={s.name}>{s.name}</span>)}</div>
+      <section className="tale">
+        <p className="label" data-reveal>My story</p>
+        <div className="tale__grid">
+          <ReadingText className="reading--md tale__lead" text={STORY_LEAD} />
+          <div className="tale__body">
+            {STORY.map((t, i) => <p key={i} data-reveal style={{ '--d': `${i * 0.08}s` }}>{t}</p>)}
           </div>
-        ))}
-      </div>
+        </div>
+      </section>
 
-      <h2 className="h2" data-reveal>Experience</h2>
-      <ol className="rows">
-        {experience.map((e, i) => (
-          <li key={e.id} className="row" data-reveal style={{ '--d': `${i * 0.06}s` }}>
-            <span className="row__no">{String(i + 1).padStart(2, '0')}</span>
-            <div><h3>{e.role}</h3><p>{e.org}</p></div>
-            <span className="row__aside">{e.kind}</span>
-          </li>
-        ))}
-      </ol>
+      <div className="bighead"><FitLine rows={[['Off the', 'clock']]} /></div>
+      <OffClock items={OFF_CLOCK} />
 
-      <h2 className="h2" data-reveal>Working together</h2>
-      <ul className="values">
-        {VALUES.map((v, i) => (
-          <li key={v.title} data-reveal style={{ '--d': `${i * 0.1}s` }}>
-            <h3>{v.title}</h3><p>{v.text}</p>
-          </li>
-        ))}
-      </ul>
-      <TLink className="textlink" to="/contact">Let’s work together →</TLink>
+      <div className="bighead"><FitLine rows={[['The', 'toolbox']]} /></div>
+      <ToolHeap />
+
+
+      <section className="xcta">
+        <FitLine rows={[['See my', 'experience']]} />
+        <div className="xcta__row">
+          <p data-reveal>Clubs I have led, teams I have worked with and the products I have helped build. The full list of roles is on one page.</p>
+          <div className="xcta__btns" data-reveal style={{ '--d': '.12s' }}>
+            <TLink className="btn btn--lg" to="/experience">See my experience →</TLink>
+            <TLink className="btn btn--ghost btn--lg" to="/contact">Get in touch</TLink>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

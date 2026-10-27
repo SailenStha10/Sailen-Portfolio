@@ -15,7 +15,7 @@ export default function FitLine({ rows, hero = false, className = '', as: Tag = 
       el.style.fontSize = '100px';
       const widest = Math.max(...[...el.querySelectorAll('.fit__row')].map((r) => r.getBoundingClientRect().width));
       const room = box.clientWidth - parseFloat(getComputedStyle(box).paddingInline) * 2;
-      if (widest > 0 && room > 0) el.style.fontSize = `${(100 * room) / widest}px`;
+      if (widest > 0 && room > 0) el.style.fontSize = `${(100 * room * 0.96) / widest}px`;
     };
     fit();
     const ro = new ResizeObserver(fit);

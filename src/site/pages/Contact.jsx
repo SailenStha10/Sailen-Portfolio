@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import { profile } from '../../data/site';
 import FitLine from '../components/FitLine';
+import Socials from '../components/Socials';
 import useReveal from '../components/useReveal';
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const width = (v, ph) => `${Math.max(v.length, ph.length) + 1}ch`;
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
   const [f, setF] = useState({ name: '', email: '', msg: '' });
+  const [err, setErr] = useState({});
   useReveal();
 
   const copy = async () => {
@@ -13,34 +18,76 @@ export default function Contact() {
     setCopied(true);
     setTimeout(() => setCopied(false), 1800);
   };
+  const set = (k) => (e) => {
+    setF({ ...f, [k]: e.target.value });
+    setErr({ ...err, [k]: false });
+  };
   const submit = (e) => {
     e.preventDefault();
-    const body = `${f.msg}\n\n— ${f.name} (${f.email})`;
-    location.href = `mailto:${profile.email}?subject=${encodeURIComponent('Project enquiry from ' + f.name)}&body=${encodeURIComponent(body)}`;
+    const found = { name: f.name.trim().length < 2, email: !emailPattern.test(f.email.trim()), msg: f.msg.trim().length < 10 };
+    setErr(found);
+    if (Object.values(found).some(Boolean)) return;
+    const body = `${f.msg.trim()}\n\n— ${f.name.trim()} (${f.email.trim()})`;
+    location.href = `mailto:${profile.email}?subject=${encodeURIComponent('Portfolio message from ' + f.name.trim())}&body=${encodeURIComponent(body)}`;
   };
-  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
 
   return (
     <div className="page">
       <FitLine hero rows={[['Let’s', 'talk']]} />
-      <div className="contact__grid">
-        <div data-reveal>
-          <p className="lede">Tell me about your project. I reply the same day.</p>
-          <button className="copy" onClick={copy}>
-            <span>{profile.email}</span>
-            <b>{copied ? 'Copied ✓' : 'Copy'}</b>
-          </button>
-          <ul className="socials">
-            {profile.socials.map((s) => <li key={s.label}><a href={s.href}>{s.label} ↗</a></li>)}
-          </ul>
-        </div>
-        <form className="form" onSubmit={submit} data-reveal style={{ '--d': '.12s' }}>
-          <label><span>Your name</span><input required value={f.name} onChange={set('name')} autoComplete="name" /></label>
-          <label><span>Email</span><input required type="email" value={f.email} onChange={set('email')} autoComplete="email" /></label>
-          <label><span>About the project</span><textarea required rows="5" value={f.msg} onChange={set('msg')} /></label>
-          <button className="btn btn--lg" type="submit">Send message →</button>
-        </form>
+      <form className="letter" onSubmit={submit} noValidate data-reveal>
+        <p className="letter__text">
+          Hi <em>{profile.name}</em>, my name is{' '}
+          <input
+            className={`inl ${err.name ? 'has-error' : ''}`}
+            style={{ width: width(f.name, 'your name') }}
+            value={f.name}
+            onChange={set('name')}
+            placeholder="your name"
+            autoComplete="name"
+            aria-label="Your name"
+            aria-invalid={!!err.name}
+          />
+          {' '}and you can reach me at{' '}
+          <input
+            className={`inl ${err.email ? 'has-error' : ''}`}
+            style={{ width: width(f.email, 'you@email.com') }}
+            value={f.email}
+            onChange={set('email')}
+            placeholder="you@email.com"
+            type="email"
+            autoComplete="email"
+            aria-label="Your email"
+            aria-invalid={!!err.email}
+          />
+          . I’d love to talk about{' '}
+          <textarea
+            className={`inl inl--area ${err.msg ? 'has-error' : ''}`}
+            rows={2}
+            value={f.msg}
+            onChange={set('msg')}
+            placeholder="a project, an idea, a song…"
+            aria-label="Your message"
+            aria-invalid={!!err.msg}
+          />
+        </p>
+        {Object.values(err).some(Boolean) && (
+          <p className="letter__err" role="alert">Please fill in your name, a valid email and a few words (10+ characters).</p>
+        )}
+        <button className="btn btn--lg" type="submit">Send it →</button>
+      </form>
+      <div className="contact__alt" data-reveal>
+        <button className="copy" onClick={copy}>
+          <span>{profile.email}</span>
+          <b>{copied ? 'Copied ✓' : 'Copy'}</b>
+        </button>
+        <Socials variant="tile" />
       </div>
+      <ul className="info" data-reveal>
+        <li><span>Email</span><b>{profile.email}</b></li>
+        <li><span>Based in</span><b>{profile.location}</b></li>
+        <li><span>Replies</span><b>Same day, usually within hours</b></li>
+        <li><span>Open to</span><b>Freelance, internships, collaborations</b></li>
+      </ul>
     </div>
   );
 }

@@ -1,28 +1,42 @@
 /** Page copy that is not in data/site.js. Edit freely. */
-export const SERVICES = [
-  { id: 'build', title: 'Website build', text: 'A responsive React site, built from your design or from scratch, ready to edit and deploy.', time: '1–2 weeks', includes: ['Responsive build', 'Page transitions & motion', 'SEO basics', 'Deploy & handover'] },
-  { id: 'design', title: 'UI / UX design', text: 'Research, wireframes and a clickable Figma prototype with a small design system.', time: 'About 1 week', includes: ['User flows', 'Wireframes', 'Hi-fi Figma screens', 'Design system starter'] },
-  { id: 'brand', title: 'Graphics & brand', text: 'Posters, logos and social artwork with a clear typographic voice.', time: '3–5 days', includes: ['Logo & colour', 'Type pairing', 'Social templates', 'Print-ready files'] },
-];
-
-export const STEPS = [
-  ['Talk', 'A short call or message about the goal, the audience and the deadline.'],
-  ['Plan', 'A clear scope, timeline and price before any work starts.'],
-  ['Design', 'Sketches and Figma screens you can react to early.'],
-  ['Build', 'Clean, responsive code with the motion and details that make it feel alive.'],
-  ['Launch', 'Deploy, hand over, and stay reachable after.'],
-];
-
-export const FAQ = [
-  ['How do we start?', 'Send a message describing the project. I reply the same day with questions or a plan.'],
-  ['Can you work from my own design?', 'Yes. I build from Figma files regularly, and I can also design from scratch.'],
-  ['Will I be able to edit the site?', 'Yes. Content lives in simple data files, and I leave a short guide for changing it.'],
-  ['How fast are replies?', 'Same day on weekdays, usually within a few hours.'],
-];
-
 export const VALUES = [
   { title: 'Design with personality', text: 'Sites that feel like the people behind them, not a template.' },
   { title: 'One person, start to finish', text: 'Design and code from the same hands, so nothing is lost in handoff.' },
   { title: 'Yours to edit', text: 'Clean, data-driven code you can change without calling me.' },
   { title: 'Quick, clear replies', text: 'Plain answers, honest timelines, no disappearing acts.' },
+];
+
+/** Gallery tiles. Add a `src` (e.g. '/photo.jpg' in /public) to show a real image; tiles without one show a colour block. `size` (a-g) picks the slot in the collage. */
+export const GALLERY = [
+  { id: 'g1', size: 'a', caption: 'Portrait', src: '/me.jpg', color: 'var(--orange)' },
+  { id: 'g2', size: 'b', caption: 'On stage', src: '', color: 'var(--blue)' },
+  { id: 'g3', size: 'c', caption: 'Design desk', src: '', color: 'var(--mint)' },
+  { id: 'g4', size: 'd', caption: 'Club events', src: '', color: 'var(--yellow)' },
+  { id: 'g5', size: 'e', caption: 'Studio session', src: '', color: 'var(--orange)' },
+  { id: 'g6', size: 'f', caption: 'Campus days', src: '', color: 'var(--blue)' },
+  { id: 'g7', size: 'g', caption: 'Backstage', src: '', color: 'var(--mint)' },
+];
+
+/** Small facts for the About page. Edit freely. */
+export const OFF_CLOCK = [
+  { title: 'Singing', text: 'Covers, original songs and the occasional stage.' },
+  { title: 'Designing', text: 'Posters, brand kits and layouts made for the fun of it.' },
+  { title: 'Building', text: 'Small web tools that solve small, real problems.' },
+  { title: 'Volunteering', text: 'Student clubs, events and community work around Kathmandu.' },
+];
+
+export const NOW = [
+  ['Studying', 'BSc CSIT'],
+  ['Building', 'Full-stack projects with React and Node.js'],
+  ['Designing', 'Interfaces in Figma and posters in Photoshop'],
+  ['Practising', 'Vocals and songwriting'],
+];
+
+/** The story on the About page. Plain text, edit freely. */
+export const STORY_LEAD = 'It started with curiosity, a notebook and a song.';
+export const STORY = [
+  'I am a BSc CSIT student who always wanted to know how things work, and then to make them myself. The first lines of code felt like a puzzle I could not put down, and somewhere in the background there was always a song I was humming.',
+  'Late nights, stubborn bugs and a lot of small wins turned that curiosity into real projects. React and Node.js became my everyday tools, and I learned to enjoy the quiet moment when something finally works.',
+  'Then design crept in. Nobody expected the developer to care about kerning, but Figma and a few posters taught me that software should feel good, not just run. Now I build and design from the same hands.',
+  'Music is the third part. It keeps me calm, brave and creative, and it is the part of me that performs. Code, design and music are three sides of one story, and I am still adding chapters.',
 ];

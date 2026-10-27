@@ -63,7 +63,7 @@ function Metrics() {
             <span className="metric__no">{String(i + 1).padStart(2, '0')}</span>
             <strong className="metric__n">
               <Count to={s.n} />
-              <span className="metric__plus" aria-hidden="true">+</span>
+              <span className="hl">+</span>
             </strong>
             <span className="metric__text">
               <b>{s.label}</b>
@@ -90,7 +90,7 @@ function Hats() {
       <div className="hats">
         {DO.map((d, i) => (
           <motion.article
-            key={d.word}
+            key={d.word} 
             className={`hat hat--${d.tone} ${open === i ? 'is-open' : ''}`}
             tabIndex={0}
             onMouseEnter={() => setOpen(i)}

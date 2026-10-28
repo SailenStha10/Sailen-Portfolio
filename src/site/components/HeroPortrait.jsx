@@ -47,7 +47,7 @@ export default function HeroPortrait() {
       onPointerLeave={() => { st.current.ts = 1; }}
     >
       <div ref={tilt} className="portrait__tilt">
-        <img className="portrait__img" src="/hero-front.webp" alt={profile.fullName} draggable="false" />
+        <img className="portrait__img" src="/photos/hero-front.webp" alt={profile.fullName} draggable="false" />
       </div>
     </div>
   );

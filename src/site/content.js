@@ -8,16 +8,16 @@ export const VALUES = [
 
 /** Gallery tiles. Add a `src` (e.g. '/photo.jpg' in /public) to show a real image; tiles without one show a colour block. `size` (a-g) picks the slot in the collage. */
 export const GALLERY = [
-  { id: 'g1', kind: 'photo', caption: 'Portrait', src: '/me.jpg', color: 'var(--orange)' },
-  { id: 'v1', kind: 'video', caption: 'Timi Bina', src: '', yt: 'HgcQOuZtVis', thumb: '/videos/HgcQOuZtVis.jpg', color: 'var(--blue)' },
-  { id: 'g2', kind: 'photo', caption: 'On stage', src: '/singing/s4.webp', color: 'var(--blue)' },
-  { id: 'g3', kind: 'photo', caption: 'Stage performance', src: '/singing/s1.webp', pos: '50% 42%', color: 'var(--mint)' },
-  { id: 'g4', kind: 'photo', caption: 'Donation drive', src: '/rotaract/r4.webp', pos: '50% 76%', color: 'var(--yellow)' },
-  { id: 'g5', kind: 'photo', caption: 'DevFest 2024', src: '/csit/c6.webp', color: 'var(--orange)' },
-  { id: 'v2', kind: 'video', caption: 'Adhuro Patra', src: '', yt: 'CVu4-l5QsMs', thumb: '/videos/CVu4-l5QsMs.jpg', color: 'var(--orange)' },
-  { id: 'g6', kind: 'photo', caption: 'Candle night', src: '/rotaract/r9.webp', color: 'var(--blue)' },
-  { id: 'g7', kind: 'photo', caption: 'Annual general meeting', src: '/leo/l7.webp', pos: '50% 60%', color: 'var(--mint)' },
-  { id: 'g8', kind: 'photo', caption: 'Rangotsav', src: '/rotaract/r11.webp', pos: '50% 70%', color: 'var(--yellow)' },
+  { id: 'g1', kind: 'photo', caption: 'Portrait', src: '/photos/me.jpg', color: 'var(--orange)' },
+  { id: 'v1', kind: 'video', caption: 'Timi Bina', src: '', yt: 'HgcQOuZtVis', thumb: '/photos/videos/HgcQOuZtVis.jpg', color: 'var(--blue)' },
+  { id: 'g2', kind: 'photo', caption: 'On stage', src: '/photos/singing/s4.webp', color: 'var(--blue)' },
+  { id: 'g3', kind: 'photo', caption: 'Stage performance', src: '/photos/singing/s1.webp', pos: '50% 42%', color: 'var(--mint)' },
+  { id: 'g4', kind: 'photo', caption: 'Donation drive', src: '/photos/rotaract/r4.webp', pos: '50% 76%', color: 'var(--yellow)' },
+  { id: 'g5', kind: 'photo', caption: 'DevFest 2024', src: '/photos/csit/c6.webp', color: 'var(--orange)' },
+  { id: 'v2', kind: 'video', caption: 'Adhuro Patra', src: '', yt: 'CVu4-l5QsMs', thumb: '/photos/videos/CVu4-l5QsMs.jpg', color: 'var(--orange)' },
+  { id: 'g6', kind: 'photo', caption: 'Candle night', src: '/photos/rotaract/r9.webp', color: 'var(--blue)' },
+  { id: 'g7', kind: 'photo', caption: 'Annual general meeting', src: '/photos/leo/l7.webp', pos: '50% 60%', color: 'var(--mint)' },
+  { id: 'g8', kind: 'photo', caption: 'Rangotsav', src: '/photos/rotaract/r11.webp', pos: '50% 70%', color: 'var(--yellow)' },
 ];
 
 /** Small facts for the About page. Edit freely. */
@@ -46,31 +46,31 @@ export const STORY = [
 
 /** Designs that ride the scroll on the Work page. Give one an `id` to link it to a project page. */
 export const DESIGNS = [
-  { title: 'Vijaya Dashami Greeting', cat: 'Festival post', color: 'var(--orange)', id: 'd-vijaya', image: '/designs/vijaya.webp', ar: '962 / 1190', text: 'A festival greeting post for Surox Technology, built around a traditional puja thali and bold Devanagari type.' },
-  { title: 'Idea to Launch', cat: 'Launch post', color: 'var(--blue)', id: 'd-launch', image: '/designs/launch.webp', ar: '980 / 1214', text: 'A "project completed" announcement for Surox Technology: a clean layout with a laptop mockup and a clear message.' },
-  { title: 'Hello, World', cat: 'Brand post', color: 'var(--ink)', image: '/designs/hello-world.webp', ar: '3375 / 4219', text: 'A brand statement post for Surox Technology: heavy black type, a rounded highlight and a faint network globe.' },
-  { title: 'Timi Bina', cat: 'Poster', color: 'var(--orange)', image: '/designs/timibina.webp', ar: '820 / 1160', text: 'A coming-soon poster for the song "Timi Bina": huge outlined type over a headphone and cloud scene.' },
-  { title: 'Board of Directors', cat: 'Leo club', color: 'var(--blue)', image: '/designs/leo-board.webp', ar: '784 / 982', text: 'A board announcement for the Leo Club of Kathmandu Natural, with the team arranged by rank in a soft mountain backdrop.' },
-  { title: 'Secretary ID Card', cat: 'ID card', color: 'var(--ink)', image: '/designs/csit-id.webp', ar: '468 / 792', text: 'A bold ID card for the CSIT Association of Nepal, with vertical name type and the role set at the bottom.' },
-  { title: 'General Meeting', cat: 'Event banner', color: 'var(--orange)', image: '/designs/rotaract-meeting.webp', ar: '943 / 690', text: 'A banner for the Rotaract Club of Kathmandu Height general meeting, mixing heavy and script lettering.' },
-  { title: 'Developing Competent Leaders', cat: 'Logo', color: 'var(--mint)', id: 'd-leaders', image: '/designs/leaders-logo.webp', ar: '528 / 307', text: 'A logo for the theme "Developing Competent Leaders": figures rising out of a flame inside a laurel wreath.' },
+  { title: 'Vijaya Dashami Greeting', cat: 'Festival post', color: 'var(--orange)', id: 'd-vijaya', image: '/photos/designs/vijaya.webp', ar: '962 / 1190', text: 'A festival greeting post for Surox Technology, built around a traditional puja thali and bold Devanagari type.' },
+  { title: 'Idea to Launch', cat: 'Launch post', color: 'var(--blue)', id: 'd-launch', image: '/photos/designs/launch.webp', ar: '980 / 1214', text: 'A "project completed" announcement for Surox Technology: a clean layout with a laptop mockup and a clear message.' },
+  { title: 'Hello, World', cat: 'Brand post', color: 'var(--ink)', image: '/photos/designs/hello-world.webp', ar: '3375 / 4219', text: 'A brand statement post for Surox Technology: heavy black type, a rounded highlight and a faint network globe.' },
+  { title: 'Timi Bina', cat: 'Poster', color: 'var(--orange)', image: '/photos/designs/timibina.webp', ar: '820 / 1160', text: 'A coming-soon poster for the song "Timi Bina": huge outlined type over a headphone and cloud scene.' },
+  { title: 'Board of Directors', cat: 'Leo club', color: 'var(--blue)', image: '/photos/designs/leo-board.webp', ar: '784 / 982', text: 'A board announcement for the Leo Club of Kathmandu Natural, with the team arranged by rank in a soft mountain backdrop.' },
+  { title: 'Secretary ID Card', cat: 'ID card', color: 'var(--ink)', image: '/photos/designs/csit-id.webp', ar: '468 / 792', text: 'A bold ID card for the CSIT Association of Nepal, with vertical name type and the role set at the bottom.' },
+  { title: 'General Meeting', cat: 'Event banner', color: 'var(--orange)', image: '/photos/designs/rotaract-meeting.webp', ar: '943 / 690', text: 'A banner for the Rotaract Club of Kathmandu Height general meeting, mixing heavy and script lettering.' },
+  { title: 'Developing Competent Leaders', cat: 'Logo', color: 'var(--mint)', id: 'd-leaders', image: '/photos/designs/leaders-logo.webp', ar: '528 / 307', text: 'A logo for the theme "Developing Competent Leaders": figures rising out of a flame inside a laurel wreath.' },
 ];
 
 /** Singing page content. Add a YouTube video id as `yt` to play it in place; without one the card opens `href`. PLACEHOLDER links. */
 export const SING = {
   videos: [
-    { title: 'Timi Bina', note: 'Official music video, The अस्तित्व’s', href: 'https://www.youtube.com/watch?v=HgcQOuZtVis', yt: 'HgcQOuZtVis', src: '', thumb: '/videos/HgcQOuZtVis.jpg' },
-    { title: 'Adhuro Patra', note: 'Original song, Sailen Shrestha', href: 'https://www.youtube.com/watch?v=CVu4-l5QsMs', yt: 'CVu4-l5QsMs', src: '', thumb: '/videos/CVu4-l5QsMs.jpg' },
-    { title: 'K yo maya ho', note: 'Guitar cover', href: 'https://www.youtube.com/shorts/0zYpEcKttvA', yt: '0zYpEcKttvA', src: '', thumb: '/videos/0zYpEcKttvA.jpg' },
+    { title: 'Timi Bina', note: 'Official music video, The अस्तित्व’s', href: 'https://www.youtube.com/watch?v=HgcQOuZtVis', yt: 'HgcQOuZtVis', src: '', thumb: '/photos/videos/HgcQOuZtVis.jpg' },
+    { title: 'Adhuro Patra', note: 'Original song, Sailen Shrestha', href: 'https://www.youtube.com/watch?v=CVu4-l5QsMs', yt: 'CVu4-l5QsMs', src: '', thumb: '/photos/videos/CVu4-l5QsMs.jpg' },
+    { title: 'K yo maya ho', note: 'Guitar cover', href: 'https://www.youtube.com/shorts/0zYpEcKttvA', yt: '0zYpEcKttvA', src: '', thumb: '/photos/videos/0zYpEcKttvA.jpg' },
     { title: 'Piya bole', note: 'Reel on Instagram', href: 'https://www.instagram.com/reel/DYm0ItWTsDo/', ig: 'DYm0ItWTsDo' },
     { title: 'Reel 02', note: 'Reel on Instagram', href: 'https://www.instagram.com/reel/DDCQXTQPgek/', ig: 'DDCQXTQPgek' },
   ],
   photos: [
-    { caption: 'Stage performance', src: '/singing/s1.webp' },
-    { caption: 'Rangotsav', src: '/singing/s2.webp' },
-    { caption: 'Rangotsav stage', src: '/singing/s3.webp' },
-    { caption: 'Rotary event', src: '/singing/s4.webp' },
-    { caption: 'New Summit College', src: '/singing/s5.webp' },
+    { caption: 'Stage performance', src: '/photos/singing/s1.webp' },
+    { caption: 'Rangotsav', src: '/photos/singing/s2.webp' },
+    { caption: 'Rangotsav stage', src: '/photos/singing/s3.webp' },
+    { caption: 'Rotary event', src: '/photos/singing/s4.webp' },
+    { caption: 'New Summit College', src: '/photos/singing/s5.webp' },
   ],
   links: [
     { label: 'YouTube', note: 'Covers and performances', href: 'https://www.youtube.com/@theastitwaband' },

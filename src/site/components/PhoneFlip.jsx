@@ -61,8 +61,8 @@ export default function PhoneFlip({ className = '' }) {
       aria-label="A phone. Drag to spin it, or click to see the other side."
     >
       <div ref={obj} className="phone__obj">
-        <img className="phone__face" src="/phone.webp" alt="" draggable="false" />
-        <img className="phone__face phone__face--back" src="/phone-back.webp" alt="" draggable="false" />
+        <img className="phone__face" src="/photos/phone.webp" alt="" draggable="false" />
+        <img className="phone__face phone__face--back" src="/photos/phone-back.webp" alt="" draggable="false" />
       </div>
     </div>
   );

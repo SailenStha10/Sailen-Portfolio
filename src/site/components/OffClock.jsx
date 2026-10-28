@@ -88,7 +88,7 @@ export default function OffClock({ items }) {
               </span>
             ))}
             <span className="oc__runner" ref={runner}>
-              <img src="/hero-front.webp" alt="" draggable="false" />
+              <img src="/photos/hero-front.webp" alt="" draggable="false" />
             </span>
           </div>
           <span className="oc__count">{unlocked} / {items.length}</span>

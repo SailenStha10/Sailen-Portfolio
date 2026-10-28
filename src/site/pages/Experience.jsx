@@ -19,7 +19,7 @@ const rest = (ev) => { ev.currentTarget.style.setProperty('--fx', 0); ev.current
 function Role({ e, n, i }) {
   return (
     <li data-reveal style={{ '--d': `${i * 0.08}s`, '--c': e.color, ...(e.hover ? { '--hv': e.hover, '--hvt': '#fff' } : {}), ...(e.figW ? { '--fw': e.figW } : {}) }}>
-      <TLink className={`xrole ${e.figure ? 'xrole--fig' : ''} ${e.hover ? 'xrole--hv' : ''} ${e.float ? 'xrole--float' : ''}`} to={`/experience/${e.id}`} {...(e.figure ? { onMouseMove: look, onMouseLeave: rest } : {})}>
+      <TLink className={`xrole ${e.figure ? 'xrole--fig' : ''} ${e.hover ? 'xrole--hv' : ''} ${e.float ? 'xrole--float' : ''} ${e.classic ? 'xrole--classic' : ''}`} to={`/experience/${e.id}`} {...(e.figure ? { onMouseMove: look, onMouseLeave: rest } : {})}>
         <span className="xrole__no">{String(n).padStart(2, '0')}</span>
         {e.group === 'community' && <span className="xrole__kind">{e.kind}</span>}
         <h4>{e.role}</h4>

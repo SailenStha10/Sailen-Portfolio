@@ -8,13 +8,16 @@ export const VALUES = [
 
 /** Gallery tiles. Add a `src` (e.g. '/photo.jpg' in /public) to show a real image; tiles without one show a colour block. `size` (a-g) picks the slot in the collage. */
 export const GALLERY = [
-  { id: 'g1', size: 'a', caption: 'Portrait', src: '/me.jpg', color: 'var(--orange)' },
-  { id: 'g2', size: 'b', caption: 'On stage', src: '', color: 'var(--blue)' },
-  { id: 'g3', size: 'c', caption: 'Design desk', src: '', color: 'var(--mint)' },
-  { id: 'g4', size: 'd', caption: 'Club events', src: '', color: 'var(--yellow)' },
-  { id: 'g5', size: 'e', caption: 'Studio session', src: '', color: 'var(--orange)' },
-  { id: 'g6', size: 'f', caption: 'Campus days', src: '', color: 'var(--blue)' },
-  { id: 'g7', size: 'g', caption: 'Backstage', src: '', color: 'var(--mint)' },
+  { id: 'g1', kind: 'photo', caption: 'Portrait', src: '/me.jpg', color: 'var(--orange)' },
+  { id: 'g2', kind: 'photo', caption: 'On stage', src: '', color: 'var(--blue)' },
+  { id: 'v1', kind: 'video', caption: 'Live cover', src: '', yt: '', color: 'var(--blue)' },
+  { id: 'v2', kind: 'video', caption: 'Studio take', src: '', yt: '', color: 'var(--orange)' },
+  { id: 'g3', kind: 'photo', caption: 'Design desk', src: '', color: 'var(--mint)' },
+  { id: 'g4', kind: 'photo', caption: 'Club events', src: '', color: 'var(--yellow)' },
+  { id: 'g5', kind: 'photo', caption: 'Studio session', src: '', color: 'var(--orange)' },
+  { id: 'g6', kind: 'photo', caption: 'Campus days', src: '', color: 'var(--blue)' },
+  { id: 'g7', kind: 'photo', caption: 'Backstage', src: '', color: 'var(--mint)' },
+  { id: 'g8', kind: 'photo', caption: 'Rehearsal', src: '', color: 'var(--yellow)' },
 ];
 
 /** Small facts for the About page. Edit freely. */

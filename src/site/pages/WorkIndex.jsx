@@ -278,10 +278,11 @@ function LeadRow({ row, n }) {
           <TLink className="lrow__go" to={`/experience/${e.id}`}>See the work →</TLink>
         </div>
       </header>
+      <div className="lrow__body">
       <div className="lrow__scroll" ref={scroller}>
         <ul className="lrow__shots">
           {e.gallery.map((g, k) => (
-            <li key={g.caption} style={{ '--k': k, '--r': `${k % 2 ? 1.8 : -1.8}deg` }}>
+            <li key={g.caption} style={{ '--k': k, '--m': e.gallery.length, '--r': `${k % 2 ? 1.8 : -1.8}deg` }}>
               <TLink className="lrow__photo" to={`/experience/${e.id}`} aria-label={`${e.role}: ${g.caption}`}>
                 {g.src ? <img src={g.src} alt="" loading="lazy" /> : <span className="gallery__art" aria-hidden="true"><i /><i /></span>}
                 <span className="lrow__idx">{String(k + 1).padStart(2, '0')}</span>
@@ -290,6 +291,8 @@ function LeadRow({ row, n }) {
             </li>
           ))}
         </ul>
+      </div>
+      {e.figure && <img className="lrow__fig" src={e.figure} alt="" draggable="false" />}
       </div>
     </li>
   );
@@ -332,6 +335,17 @@ export default function WorkIndex() {
       </Portal>
       <Singing />
       <Leadership />
+
+      <section className="xcta xcta--work">
+        <FitLine rows={[['See the', 'experience']]} />
+        <div className="xcta__row">
+          <p data-reveal>The clubs I have led and the teams I have built with, role by role, with the work behind each one.</p>
+          <div className="xcta__btns" data-reveal style={{ '--d': '.12s' }}>
+            <TLink className="btn btn--lg" to="/experience">See the experience →</TLink>
+            <TLink className="btn btn--ghost btn--lg" to="/contact">Get in touch</TLink>
+          </div>
+        </div>
+      </section>
 
       {proj && <ProjectPop p={proj} onClose={() => setProj(null)} />}
       {design && <DesignPop d={design} onClose={() => setDesign(null)} />}

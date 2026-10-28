@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { profile, projects } from '../../data/site';
 import { NavProvider, TLink, enterFor } from './nav';
@@ -14,22 +14,33 @@ const LINKS = [
 ];
 const isActive = (pathname, to) => (to === '/' ? pathname === '/' : pathname.startsWith(to));
 
+/** First-load screen: the name and a progress line that fills in 1.5 seconds, then the two halves part. */
 function Loader({ onDone, leaving }) {
   const [n, setN] = useState(0);
+  const done = useRef(onDone);
+  done.current = onDone;
   useEffect(() => {
-    let v = 0;
-    const id = setInterval(() => {
-      v = Math.min(100, v + 3 + Math.random() * 9);
-      setN(Math.floor(v));
-      if (v >= 100) { clearInterval(id); setTimeout(onDone, 350); }
-    }, 55);
-    return () => clearInterval(id);
-  }, [onDone]);
+    const start = performance.now();
+    let raf = 0;
+    let t = 0;
+    const tick = (now) => {
+      const k = Math.min(1, (now - start) / 1500);
+      setN(Math.round((1 - Math.pow(1 - k, 2.2)) * 100));
+      if (k < 1) raf = requestAnimationFrame(tick);
+      else t = setTimeout(() => done.current(), 80);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => { cancelAnimationFrame(raf); clearTimeout(t); };
+  }, []);
   return (
     <div className={`loader ${leaving ? 'is-leaving' : ''}`} aria-hidden="true">
-      <span className="loader__name">©{profile.name}</span>
-      <span className="loader__count">{String(n).padStart(3, '0')}</span>
-      <span className="loader__bar" style={{ transform: `scaleX(${n / 100})` }} />
+      <span className="loader__half loader__half--top" />
+      <span className="loader__half loader__half--bottom" />
+      <div className="loader__center">
+        <h1 className="loader__word">{profile.name}</h1>
+        <span className="loader__count">{String(n).padStart(3, '0')}</span>
+        <span className="loader__line"><i style={{ transform: `scaleX(${n / 100})` }} /></span>
+      </div>
     </div>
   );
 }
@@ -60,7 +71,7 @@ function Header() {
     <>
       <header className={`hd ${solid ? 'is-solid' : ''}`}>
         <span className="progress" />
-        <TLink className="hd__logo" to="/">©{profile.name}</TLink>
+        <TLink className="hd__logo" to="/">{profile.name}</TLink>
         <nav className="hd__nav" aria-label="Primary">
           {LINKS.map((l) => (
             <TLink key={l.to} to={l.to} className={isActive(pathname, l.to) ? 'is-active' : ''}>
@@ -68,7 +79,7 @@ function Header() {
             </TLink>
           ))}
         </nav>
-        <TLink className="btn btn--sm hd__cta" to="/contact">Hire me</TLink>
+        <TLink className="btn btn--sm hd__cta" to="/contact">Let’s talk</TLink>
         <button className={`hd__burger ${open ? 'is-open' : ''}`} aria-label="Menu" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
           <i /><i />
         </button>
@@ -104,12 +115,11 @@ function Footer() {
 
 function Shell() {
   const { pathname } = useLocation();
-  const [loading, setLoading] = useState(() => !sessionStorage.getItem('loaded') && pathname === '/');
+  const [loading, setLoading] = useState(true);
   const [leaving, setLeaving] = useState(false);
   const root = document.documentElement;
 
   const release = () => {
-    sessionStorage.setItem('loaded', '1');
     root.classList.add('is-go');
     setLeaving(true);
     window.dispatchEvent(new Event('site-go'));

@@ -8,13 +8,13 @@ export function variantFor(pathname) {
   const [seg, sub] = pathname.split('/').filter(Boolean);
   if (!seg) return 'iris';
   if (seg === 'work') return sub ? 'blinds' : 'up';
-  return { about: 'split', experience: 'left', gallery: 'blinds', contact: 'iris' }[seg] || 'up';
+  return { about: 'split', experience: 'rows', gallery: 'blinds', contact: 'iris' }[seg] || 'up';
 }
 export function enterFor(pathname) {
   const [seg, sub] = pathname.split('/').filter(Boolean);
   if (!seg) return 'zoom';
   if (seg === 'work') return sub ? 'case' : 'rise';
-  return { about: 'drop', experience: 'right', gallery: 'tilt', contact: 'left' }[seg] || 'rise';
+  return { about: 'drop', experience: 'wipe', gallery: 'tilt', contact: 'left' }[seg] || 'rise';
 }
 
 /** Internal navigation behind a curtain that covers the page, swaps it, then reveals the new one. */

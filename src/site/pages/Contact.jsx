@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { profile } from '../../data/site';
 import FitLine from '../components/FitLine';
+import PhoneFlip from '../components/PhoneFlip';
 import Socials from '../components/Socials';
 import useReveal from '../components/useReveal';
 
@@ -8,16 +9,10 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const width = (v, ph) => `${Math.max(v.length, ph.length) + 1}ch`;
 
 export default function Contact() {
-  const [copied, setCopied] = useState(false);
   const [f, setF] = useState({ name: '', email: '', msg: '' });
   const [err, setErr] = useState({});
   useReveal();
 
-  const copy = async () => {
-    try { await navigator.clipboard.writeText(profile.email); } catch { /* clipboard unavailable */ }
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1800);
-  };
   const set = (k) => (e) => {
     setF({ ...f, [k]: e.target.value });
     setErr({ ...err, [k]: false });
@@ -34,6 +29,7 @@ export default function Contact() {
   return (
     <div className="page">
       <FitLine hero rows={[['Let’s', 'talk']]} />
+      <div className="contact__top">
       <form className="letter" onSubmit={submit} noValidate data-reveal>
         <p className="letter__text">
           Hi <em>{profile.name}</em>, my name is{' '}
@@ -75,19 +71,11 @@ export default function Contact() {
         )}
         <button className="btn btn--lg" type="submit">Send it →</button>
       </form>
-      <div className="contact__alt" data-reveal>
-        <button className="copy" onClick={copy}>
-          <span>{profile.email}</span>
-          <b>{copied ? 'Copied ✓' : 'Copy'}</b>
-        </button>
-        <Socials variant="tile" />
+        <PhoneFlip className="contact__phone" />
       </div>
-      <ul className="info" data-reveal>
-        <li><span>Email</span><b>{profile.email}</b></li>
-        <li><span>Based in</span><b>{profile.location}</b></li>
-        <li><span>Replies</span><b>Same day, usually within hours</b></li>
-        <li><span>Open to</span><b>Freelance, internships, collaborations</b></li>
-      </ul>
+      <div className="contact__alt" data-reveal>
+        <Socials variant="tile" email className="contact__soc" />
+      </div>
     </div>
   );
 }

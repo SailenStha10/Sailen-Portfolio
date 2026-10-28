@@ -19,7 +19,7 @@ const NOTE = {
  * Social links. `variant`: 'round' (icon buttons), 'pill' (icon + name) or 'tile' (big card).
  * Each one fills with its brand colour on hover.
  */
-export default function Socials({ className = '', variant = 'round' }) {
+export default function Socials({ className = '', variant = 'round', email = false }) {
   // round icons lean a little towards the pointer
   const pull = (e) => {
     if (variant !== 'round') return;
@@ -33,6 +33,25 @@ export default function Socials({ className = '', variant = 'round' }) {
   };
   return (
     <div className={`soc soc--${variant} ${className}`}>
+      {email && (
+        <a
+          className="soc__a"
+          href={`mailto:${profile.email}`}
+          aria-label="Email"
+          data-tip="Email"
+          style={{ '--b': 'var(--accent)', '--b-c': 'var(--accent)', '--i': 0 }}
+        >
+          <span className="soc__mark" aria-hidden="true"><SocialGlyph name="mail" /></span>
+          {variant !== 'round' && (
+            <span className="soc__txt">
+              <b>Email</b>
+              {variant === 'tile' && <small>{profile.email}</small>}
+            </span>
+          )}
+          {variant !== 'round' && <span className="soc__arrow" aria-hidden="true">↗</span>}
+          {variant === 'tile' && <span className="soc__ghost" aria-hidden="true"><SocialGlyph name="mail" /></span>}
+        </a>
+      )}
       {profile.socials.map((s, i) => (
         <a
           key={s.label}

@@ -16,17 +16,16 @@ export default function About() {
       <FitLine hero rows={[['About', profile.name]]} />
       <div className="about__grid">
         <IdCard />
-        <div>
+        <div className="about__main">
           <ReadingText className="reading--lg" text={`${profile.tagline} I like the point where logic meets taste: a clean API, a tight layout, a song that lands.`} />
-          <dl className="facts" data-reveal>
-            <div><dt>Based in</dt><dd>{profile.location}</dd></div>
-            <div><dt>Studying</dt><dd>BSc CSIT</dd></div>
-            <div><dt>Roles</dt><dd>{profile.roles.join(', ')}</dd></div>
-            <div><dt>Elsewhere</dt><dd><Socials variant="pill" /></dd></div>
-          </dl>
-          <div className="now" data-reveal>
-            <p className="label">Right now</p>
-            <ul>
+          <div className="notebook">
+            <dl className="facts">
+              <div><dt>Based in</dt><dd>{profile.location}</dd></div>
+              <div><dt>Roles</dt><dd>{profile.roles.join(', ')}</dd></div>
+              <div><dt>Elsewhere</dt><dd><Socials variant="pill" /></dd></div>
+            </dl>
+            <p className="notebook__title">Right now</p>
+            <ul className="now">
               {NOW.map(([k, v]) => <li key={k}><span>{k}</span><b>{v}</b></li>)}
             </ul>
           </div>

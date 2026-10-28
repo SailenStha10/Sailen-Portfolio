@@ -1,4 +1,37 @@
 import { useEffect, useRef, useState } from 'react';
+import { projects } from '../../data/site';
+import { GALLERY } from '../content';
+import Poster from './Poster';
+
+/** Floating preview of the projects and photos behind one line. It trails the pointer. */
+function Peek({ item, at }) {
+  const box = useRef(null);
+  useEffect(() => {
+    if (box.current && at) {
+      const flip = at.x > innerWidth - 480;
+      const y = Math.min(Math.max(at.y - 170, 80), innerHeight - 360);
+      box.current.style.transform = `translate3d(${flip ? at.x - 440 : at.x + 28}px, ${y}px, 0)`;
+    }
+  }, [at]);
+  const cards = (item?.show || []).map(([k, id], i) => {
+    if (k === 'p') {
+      const idx = projects.findIndex((p) => p.id === id);
+      return idx < 0 ? null : <div key={id} className="peek__card peek__card--p" style={{ '--n': i }}><Poster p={projects[idx]} index={idx} /></div>;
+    }
+    const g = GALLERY.find((x) => x.id === id);
+    return g ? (
+      <div key={id} className="peek__card peek__card--g" style={{ '--n': i, '--c': g.color }}>
+        {g.src ? <img src={g.src} alt="" draggable="false" /> : <span className="gallery__art" aria-hidden="true"><i /><i /></span>}
+        <b>{g.caption}</b>
+      </div>
+    ) : null;
+  });
+  return (
+    <div className={`peek ${item ? 'is-on' : ''}`} ref={box} aria-hidden="true">
+      <div className="peek__stack" key={item?.title}>{cards}</div>
+    </div>
+  );
+}
 
 /**
  * A loading bar with a little Sailen running along it. As you scroll through the section the bar fills,
@@ -12,6 +45,7 @@ export default function OffClock({ items }) {
   const pct = useRef(null);
   const [unlocked, setUnlocked] = useState(0);
   const last = useRef(-1);
+  const [peek, setPeek] = useState({ i: -1, x: 0, y: 0 });
 
   useEffect(() => {
     const el = box.current;
@@ -59,9 +93,14 @@ export default function OffClock({ items }) {
           </div>
           <span className="oc__count">{unlocked} / {items.length}</span>
         </div>
-        <ol className="oc__lines">
+        <ol className="oc__lines" onMouseLeave={() => setPeek((p) => ({ ...p, i: -1 }))}>
           {items.map((it, i) => (
-            <li key={it.title} className={`oc__line ${i < unlocked ? 'is-on' : ''}`}>
+            <li
+              key={it.title}
+              className={`oc__line ${i < unlocked ? 'is-on' : ''} ${peek.i === i ? 'is-peek' : ''}`}
+              onMouseMove={(e) => setPeek({ i: i < unlocked ? i : -1, x: e.clientX, y: e.clientY })}
+              onMouseLeave={() => setPeek((p) => ({ ...p, i: -1 }))}
+            >
               <span className="oc__no">{String(i + 1).padStart(2, '0')}</span>
               <h3>{it.title}</h3>
               <p>{it.text}</p>
@@ -69,6 +108,7 @@ export default function OffClock({ items }) {
           ))}
         </ol>
       </div>
+      <Peek item={peek.i >= 0 ? items[peek.i] : null} at={peek} />
     </div>
   );
 }

@@ -12,9 +12,8 @@ export const profile = {
   email: 'hello@example.com', // PLACEHOLDER — the contact form opens a mail to this address
   location: 'Nepal', // PLACEHOLDER
   roles: [
-    'Software Developer',
     'UI/UX Designer',
-    'Full-Stack Builder',
+    'Full Stack Developer',
     'Graphic Designer',
     'Singer',
   ],
@@ -218,12 +217,13 @@ export const skillGroups = [
 ];
 
 // Roles held, newest focus first as given. `art` picks the illustration.
+// `group` splits the Experience page: 'community' or 'technical'. `work` is a short list of what was done (PLACEHOLDER, edit freely).
 export const experience = [
-  { id: 'leo', role: 'President', org: 'Leo Club of Kathmandu Natural', kind: 'Leadership', art: 'crown', color: 'var(--yellow)' },
-  { id: 'rotaract', role: 'Secretary', org: 'Rotaract Club of Kathmandu Height', kind: 'Leadership', art: 'people', color: 'var(--coral)' },
-  { id: 'csit', role: 'Secretary & Partnership Lead', org: 'CSIT Association of Nepal', kind: 'Community', art: 'building', color: 'var(--mint)' },
-  { id: 'codeit', role: 'Full Stack Developer Intern', org: 'Code IT', kind: 'Engineering', art: 'laptop', color: 'var(--blue)' },
-  { id: 'surox', role: 'Frontend Developer & Graphics Designer', org: 'Surox Technology', kind: 'Design + Code', art: 'palette', color: 'var(--coral)' },
+  { id: 'leo', summary: 'Leading a youth service club.', description: 'As President I lead the board, set the year\'s plan and keep a team of volunteers moving in one direction. The work is part planning, part people, and mostly showing up.', gallery: [{ caption: 'Fundraiser', src: '' }, { caption: 'Service drive', src: '' }, { caption: 'Board meeting', src: '' }, { caption: 'Team day', src: '' }], group: 'community', role: 'President', org: 'Leo Club of Kathmandu Natural', kind: 'Leadership', art: 'crown', color: 'var(--yellow)', work: ['Lead the board and plan the yearly service calendar', 'Organise community drives and fundraising events', 'Coordinate members, partners and sponsors'] },
+  { id: 'rotaract', summary: 'Keeping a service club organised.', description: 'As Secretary I keep the club running behind the scenes: records, communication and the logistics that make events happen on time.', gallery: [{ caption: 'Club event', src: '' }, { caption: 'Community visit', src: '' }, { caption: 'Meeting', src: '' }, { caption: 'Members', src: '' }], group: 'community', role: 'Secretary', org: 'Rotaract Club of Kathmandu Height', kind: 'Leadership', art: 'people', color: 'var(--coral)', work: ['Keep records, minutes and official communication', 'Support project planning and event logistics', 'Welcome and onboard new members'] },
+  { id: 'csit', summary: 'Connecting students and partners.', description: 'I handle the association\'s paperwork and build partnerships with companies and campuses, so students get more workshops, events and chances to learn.', gallery: [{ caption: 'Workshop', src: '' }, { caption: 'Partner meet', src: '' }, { caption: 'Student event', src: '' }, { caption: 'Team', src: '' }], group: 'community', role: 'Secretary & Partnership Lead', org: 'CSIT Association of Nepal', kind: 'Community', art: 'building', color: 'var(--mint)', work: ['Handle documentation, meetings and notices', 'Build partnerships with companies and campuses', 'Help run student events and workshops'] },
+  { id: 'codeit', summary: 'Building features as a full stack intern.', description: 'I worked with the team on real product features, from the React interface to the Node.js API and the database behind it.', gallery: [{ caption: 'Feature demo', src: '' }, { caption: 'Code review', src: '' }, { caption: 'Dashboard', src: '' }, { caption: 'Team', src: '' }], group: 'technical', role: 'Full Stack Developer Intern', org: 'Code IT', kind: 'Engineering', art: 'laptop', color: 'var(--blue)', work: ['Built full stack features with React and Node.js', 'Worked with APIs, databases and version control', 'Shipped fixes and took part in code reviews'] },
+  { id: 'surox', summary: 'Designing and building client interfaces.', description: 'Part designer, part developer: I turned briefs into graphics and layouts, then into responsive, working pages.', gallery: [{ caption: 'Web build', src: '' }, { caption: 'Banner set', src: '' }, { caption: 'Brand material', src: '' }, { caption: 'Layout', src: '' }], group: 'technical', role: 'Frontend Developer & Graphics Designer', org: 'Surox Technology', kind: 'Design + Code', art: 'palette', color: 'var(--coral)', work: ['Built responsive interfaces for client sites', 'Designed graphics, banners and brand material', 'Turned design files into clean frontend code'] },
 ];
 
 // PLACEHOLDER projects
@@ -299,6 +299,18 @@ export const projects = [
       'A multi-page animated portfolio with page transitions, scroll-driven chapters and a data-driven structure that is easy to edit.',
     tags: ['React', 'Framer Motion', 'Vite'],
     accent: 'var(--yellow)',
+    live: '#',
+    code: '#',
+  },
+  {
+    id: 'p7',
+    title: 'Pocket Budget', // PLACEHOLDER
+    category: 'Development',
+    summary: 'A simple money tracker with monthly charts and category budgets.',
+    description:
+      'A React and Node.js app for logging spending, setting category budgets and seeing the month at a glance. Built with an emphasis on fast entry and readable charts.',
+    tags: ['React', 'Node.js', 'Charts'],
+    accent: 'var(--mint)',
     live: '#',
     code: '#',
   },

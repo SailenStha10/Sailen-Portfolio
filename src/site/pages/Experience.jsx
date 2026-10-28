@@ -1,40 +1,48 @@
-import { experience, skillGroups } from '../../data/site';
+import { experience } from '../../data/site';
 import FitLine from '../components/FitLine';
 import { TLink } from '../components/nav';
 import useReveal from '../components/useReveal';
 
+const GROUPS = [
+  { id: 'community', no: '01', title: 'Community & leadership', blurb: 'Clubs and associations where I lead, organise and represent.' },
+  { id: 'technical', no: '02', title: 'Technical experience', blurb: 'Teams where I build and design real products.' },
+];
+
+function Role({ e, n, i }) {
+  return (
+    <li data-reveal style={{ '--d': `${i * 0.08}s`, '--c': e.color }}>
+      <TLink className="xrole" to={`/experience/${e.id}`}>
+        <span className="xrole__no">{String(n).padStart(2, '0')}</span>
+        <span className="xrole__kind">{e.kind}</span>
+        <h4>{e.role}</h4>
+        <p className="xrole__org">{e.org}</p>
+        <p className="xrole__sum">{e.summary}</p>
+        <span className="xrole__go">See the work <i aria-hidden="true">→</i></span>
+      </TLink>
+    </li>
+  );
+}
+
 export default function Experience() {
   useReveal();
-  const kinds = [...new Set(experience.map((e) => e.kind))];
   return (
     <div className="page">
       <FitLine hero rows={[['My', 'experience']]} />
       <p className="lede" data-reveal>Leading clubs, building products and designing for real people. Every role taught me something the classroom did not.</p>
-      <ul className="stats stats--row" data-reveal>
-        <li><b>{String(experience.length).padStart(2, '0')}</b><span>Roles held</span></li>
-        <li><b>{String(kinds.length).padStart(2, '0')}</b><span>Kinds of work</span></li>
-        <li><b>{String(skillGroups.reduce((n, g) => n + g.skills.length, 0))}</b><span>Tools and skills</span></li>
-      </ul>
-      <ol className="rows">
-        {experience.map((e, i) => (
-          <li key={e.id} className="row" data-reveal style={{ '--d': `${i * 0.06}s` }}>
-            <span className="row__no">{String(i + 1).padStart(2, '0')}</span>
-            <div><h3>{e.role}</h3><p>{e.org}</p></div>
-            <span className="row__aside">{e.kind}</span>
-          </li>
-        ))}
-      </ol>
-      <h2 className="h2" data-reveal>Kinds of work</h2>
-      <div className="tools">
-        {kinds.map((k, i) => (
-          <div key={k} className="tools__group" data-reveal style={{ '--d': `${i * 0.1}s` }}>
-            <h3>{k}</h3>
-            <ul className="mini">
-              {experience.filter((e) => e.kind === k).map((e) => <li key={e.id}><b>{e.role}</b><span>{e.org}</span></li>)}
+      {GROUPS.map((g) => {
+        const roles = experience.filter((e) => e.group === g.id);
+        return (
+          <section key={g.id} className="xgroup">
+            <header className="xgroup__head" data-reveal>
+              <span className="xgroup__no">{g.no}</span>
+              <h2>{g.title}</h2>
+            </header>
+            <ul className={`xgroup__grid xgroup__grid--${roles.length}`}>
+              {roles.map((e, i) => <Role key={e.id} e={e} i={i} n={experience.indexOf(e) + 1} />)}
             </ul>
-          </div>
-        ))}
-      </div>
+          </section>
+        );
+      })}
 
       <section className="xcta">
         <FitLine rows={[['Work', 'with me']]} />

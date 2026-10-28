@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { profile, projects } from '../../data/site';
-import { NavProvider, TLink } from './nav';
+import { NavProvider, TLink, enterFor } from './nav';
 import Socials from './Socials';
 
 const LINKS = [
@@ -128,7 +128,7 @@ function Shell() {
     <>
       {loading && <Loader onDone={release} leaving={leaving} />}
       <Header />
-      <main id="top" key={pathname}><Outlet /></main>
+      <main id="top" key={pathname} data-enter={enterFor(pathname)}><Outlet /></main>
       <Footer />
     </>
   );

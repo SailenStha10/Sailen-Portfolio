@@ -80,9 +80,6 @@ export default function IdCard() {
             </div>
             <h3>{profile.fullName}</h3>
             <p className="idface__role">{profile.roles[0]} + {profile.roles[1]}</p>
-            <ul className="idface__chips">
-              {['React', 'Figma', 'Node.js', 'Vocals'].map((c) => <li key={c}>{c}</li>)}
-            </ul>
             <div className="idface__bar" aria-hidden="true">
               {Array.from({ length: 34 }, (_, i) => <i key={i} style={{ width: 1 + ((i * 7) % 4) }} />)}
             </div>

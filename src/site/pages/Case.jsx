@@ -36,8 +36,8 @@ export default function Case() {
         ))}
       </div>
       <div className="case__links" data-reveal>
-        <a className="btn" href={p.live}>Live site ↗</a>
-        <a className="btn btn--ghost" href={p.code}>Source ↗</a>
+        {p.live && p.live !== '#' && <a className="btn" href={p.live} target="_blank" rel="noreferrer noopener">Live site ↗</a>}
+        {p.code && p.code !== '#' && <a className="btn btn--ghost" href={p.code}>Source ↗</a>}
       </div>
       <TLink className="next" to={`/work/${next.id}`}>
         <span>Next project</span>

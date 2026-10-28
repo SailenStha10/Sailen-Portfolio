@@ -1065,3 +1065,19 @@ main[data-enter='case']  { animation-name: enter-case; }
 .cv-rows.is-out > i { transition: transform .5s var(--cv) calc(var(--n) * .07s); transform: scaleX(0); transform-origin: right; }
 main[data-enter='wipe'] { animation-name: enter-wipe; animation-duration: 1s; }
 @keyframes enter-wipe { from { opacity: 0; clip-path: inset(0 0 100% 0); translate: 0 -30px; } to { clip-path: inset(0 0 -200px 0); } }
+
+/* posters that are real screenshots */
+.poster--img { background: #0b0b0b; }
+.poster--img > i, .poster--img > span { display: none; }
+.poster__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* a second project card in the hover preview sits lower right, like the photo would */
+.peek__card--p:nth-child(2) { left: auto; right: 0; top: auto; bottom: 0; width: 260px; --r: 6deg; }
+
+/* posters that are real images */
+.poster--img { aspect-ratio: var(--ar, 4 / 3); }
+.poster--fit { background: #0b0b0b; }
+.poster--fit .poster__img { object-fit: contain; }
+.case__hero .poster--fit { aspect-ratio: auto; height: min(82svh, 900px); }
+.pop__cover--img { display: grid; place-items: center; padding: 14px; background: #0b0b0b; }
+.pop__cover--img img { display: block; max-width: 100%; max-height: min(78svh, 700px); width: auto; height: auto; object-fit: contain; border-radius: 8px; }

@@ -91,7 +91,7 @@ function ProjectPop({ p, onClose }) {
         <ul className="pop__tags">{p.tags.map((t) => <li key={t}>{t}</li>)}</ul>
         <div className="pop__links">
           <a className="btn" href={p.live} target="_blank" rel="noreferrer noopener">Live project ↗</a>
-          <a className="btn btn--ghost" href={p.code} target="_blank" rel="noreferrer noopener">Source code</a>
+          {p.code && p.code !== '#' && <a className="btn btn--ghost" href={p.code} target="_blank" rel="noreferrer noopener">Source code</a>}
         </div>
       </div>
     </Modal>
@@ -111,7 +111,7 @@ function Tile({ d, onOpen }) {
   const rest = () => { ref.current.style.transform = ''; };
   return (
     <button type="button" className="dtile" ref={ref} style={{ '--ar': d.ar }} onMouseMove={tilt} onMouseLeave={rest} onClick={() => onOpen(d)} aria-label={`Open ${d.title}`}>
-      <Poster p={{ accent: d.color, category: d.cat, title: d.title }} index={DESIGNS.indexOf(d)} />
+      <Poster p={{ accent: d.color, category: d.cat, title: d.title, image: d.image, fit: true }} index={DESIGNS.indexOf(d)} />
       <span className="dtile__hint" aria-hidden="true">Open</span>
     </button>
   );
@@ -138,7 +138,7 @@ function DesignColumns({ tracks, onOpen }) {
 function DesignPop({ d, onClose }) {
   return (
     <Modal onClose={onClose} label={d.title}>
-      <div className="pop__cover" style={{ '--ar': '4 / 3' }}><Poster p={{ accent: d.color, category: d.cat, title: d.title }} index={DESIGNS.indexOf(d)} /></div>
+      <div className="pop__cover pop__cover--img"><img src={d.image} alt={d.title} draggable="false" /></div>
       <div className="pop__body">
         <span className="pop__kicker">{d.cat}</span>
         <h3>{d.title}</h3>
@@ -315,7 +315,7 @@ export default function WorkIndex() {
   const [proj, setProj] = useState(null);
   const [design, setDesign] = useState(null);
   const tracks = useRef([]);
-  const dev = projects.filter((p) => p.category === 'Development').slice(0, 4);
+  const dev = projects.filter((p) => p.category === 'Development');
 
   // the design columns ride the page scroll: scroll down and they move up
   const ride = useRef((prog, total) => {

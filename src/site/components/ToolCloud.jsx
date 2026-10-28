@@ -4,8 +4,40 @@ import { skillGroups } from '../../data/site';
 const SRC = (n) => `https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/${n}/${n}-original.svg`;
 const rand = (i, k) => { const x = Math.sin(i * 127.1 + k * 311.7) * 43758.5453; return x - Math.floor(x); };
 
+/** Marks that are not in the devicon set are drawn here. */
+const MARKS = {
+  neon: () => (
+    <>
+      <rect x="1.500" y="1.500" width="21" height="21" rx="6" fill="#00e599" />
+      <path d="M7.500 17.500V6.500h2.200l5 6.200V6.500h2.200v11h-2.200l-5-6.200v6.200z" fill="#0b0b0b" />
+    </>
+  ),
+  cursor: () => (
+    <>
+      <rect x="1.500" y="1.500" width="21" height="21" rx="6" fill="#14140f" />
+      <path d="M7.200 5.800l10.600 6.200-4.400 1.300-2.200 4.200z" fill="#f6f3ec" />
+    </>
+  ),
+  guitar: (color) => (
+    <>
+      <circle cx="12" cy="12" r="11" fill={color} />
+      <g fill="none" stroke="#fff" strokeWidth="1.700" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="9.200" cy="15" r="3.300" />
+        <circle cx="11.700" cy="12.500" r="1.700" />
+        <path d="M12.900 11.300L18.200 6" />
+        <path d="M17 5.200l1.800 1.800" />
+      </g>
+    </>
+  ),
+};
+
+function Mark({ name, size, color }) {
+  return <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">{MARKS[name](color)}</svg>;
+}
+
 export function Logo({ skill, color, size = 26 }) {
   const [failed, setFailed] = useState(skill.glyph);
+  if (MARKS[skill.icon]) return <Mark name={skill.icon} size={size} color={color} />;
   return failed
     ? <span className="tool__letter" style={{ background: color, width: size, height: size, fontSize: size * 0.5 }}>{skill.name.charAt(0)}</span>
     : <img src={SRC(skill.icon)} alt="" width={size} height={size} loading="lazy" onError={() => setFailed(true)} />;

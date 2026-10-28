@@ -132,7 +132,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <SelectedWork items={projects} />
+      <SelectedWork items={projects.filter((p) => p.featured)} />
       <Statement />
       <AboutTeaser />
       <ExperienceTeaser />

@@ -23,9 +23,9 @@ export const GALLERY = [
 /** Small facts for the About page. Edit freely. */
 export const OFF_CLOCK = [
   { title: 'Singing', text: 'Covers, original songs and the occasional stage.', show: [['p', 'p3'], ['g', 'g2']] },
-  { title: 'Designing', text: 'Posters, brand kits and layouts made for the fun of it.', show: [['p', 'p2'], ['g', 'g3']] },
-  { title: 'Building', text: 'Small web tools that solve small, real problems.', show: [['p', 'p1'], ['g', 'g1']] },
-  { title: 'Volunteering', text: 'Student clubs, events and community work around Kathmandu.', show: [['p', 'p4'], ['g', 'g4']] },
+  { title: 'Designing', text: 'Posters, brand kits and layouts made for the fun of it.', show: [['p', 'd-vijaya'], ['g', 'g3']] },
+  { title: 'Building', text: 'Small web tools that solve small, real problems.', show: [['p', 'rmfc'], ['p', 'portfolio']] },
+  { title: 'Volunteering', text: 'Student clubs, events and community work around Kathmandu.', show: [['p', 'allseason'], ['g', 'g4']] },
 ];
 
 export const NOW = [
@@ -44,14 +44,15 @@ export const STORY = [
   'Music is the third part. It keeps me calm, brave and creative, and it is the part of me that performs. Code, design and music are three sides of one story, and I am still adding chapters.',
 ];
 
-/** Designs that drift upward on the Work page. Give one an `id` to link it to a project page. PLACEHOLDER titles. */
+/** Designs that ride the scroll on the Work page. Give one an `id` to link it to a project page. */
 export const DESIGNS = [
-  { title: 'Mood Journal', text: 'A mobile journaling app that turns daily moods into colour. Research, wireframes and a full Figma prototype.', cat: 'App UI', color: 'var(--cyan)', id: 'p2', ar: '4 / 5' },
-  { title: 'Colour Series', text: 'Typography-led posters where each palette stands for a feeling: joy, focus, calm and curiosity.', cat: 'Poster', color: 'var(--orange)', id: 'p5', ar: '3 / 4' },
-  { title: 'Brand Kit', text: 'A small identity system: logo, palette, type pairing and usage rules for a student club.', cat: 'Identity', color: 'var(--mint)', ar: '1 / 1' },
-  { title: 'Event Flyer', text: 'A bold print flyer for a campus event, built on one big shape and one loud word.', cat: 'Print', color: 'var(--yellow)', ar: '3 / 4' },
-  { title: 'Album Cover', text: 'Cover art for an acoustic covers EP, designed to match the mood of the songs.', cat: 'Cover art', color: 'var(--blue)', ar: '1 / 1' },
-  { title: 'Icon Set', text: 'A set of rounded, friendly icons drawn on one grid for a mobile app.', cat: 'Icons', color: 'var(--orange)', ar: '4 / 5' },
+  { title: 'Vijaya Dashami Greeting', cat: 'Festival post', color: 'var(--orange)', id: 'd-vijaya', image: '/designs/vijaya.webp', ar: '962 / 1190', text: 'A festival greeting post for Surox Technology, built around a traditional puja thali and bold Devanagari type.' },
+  { title: 'Idea to Launch', cat: 'Launch post', color: 'var(--blue)', id: 'd-launch', image: '/designs/launch.webp', ar: '980 / 1214', text: 'A "project completed" announcement for Surox Technology: a clean layout with a laptop mockup and a clear message.' },
+  { title: 'Timi Bina', cat: 'Poster', color: 'var(--orange)', image: '/designs/timibina.webp', ar: '820 / 1160', text: 'A coming-soon poster for the song "Timi Bina": huge outlined type over a headphone and cloud scene.' },
+  { title: 'Board of Directors', cat: 'Leo club', color: 'var(--blue)', image: '/designs/leo-board.webp', ar: '784 / 982', text: 'A board announcement for the Leo Club of Kathmandu Natural, with the team arranged by rank in a soft mountain backdrop.' },
+  { title: 'Secretary ID Card', cat: 'ID card', color: 'var(--ink)', image: '/designs/csit-id.webp', ar: '468 / 792', text: 'A bold ID card for the CSIT Association of Nepal, with vertical name type and the role set at the bottom.' },
+  { title: 'General Meeting', cat: 'Event banner', color: 'var(--orange)', image: '/designs/rotaract-meeting.webp', ar: '943 / 690', text: 'A banner for the Rotaract Club of Kathmandu Height general meeting, mixing heavy and script lettering.' },
+  { title: 'Developing Competent Leaders', cat: 'Logo', color: 'var(--mint)', id: 'd-leaders', image: '/designs/leaders-logo.webp', ar: '528 / 307', text: 'A logo for the theme "Developing Competent Leaders": figures rising out of a flame inside a laurel wreath.' },
 ];
 
 /** Singing page content. Add a YouTube video id as `yt` to play it in place; without one the card opens `href`. PLACEHOLDER links. */

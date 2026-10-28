@@ -9,9 +9,10 @@ function VideoTile({ g, i, onOpen }) {
   const start = () => vid.current?.play().catch(() => {});
   const stop = () => { if (vid.current) { vid.current.pause(); vid.current.currentTime = 0; } };
   return (
-    <li className="gtile gtile--video" data-reveal style={{ '--d': `${(i % 4) * 0.07}s`, '--c': g.color }}>
+    <li className={`gtile gtile--video gslot gslot--${i}`} data-reveal style={{ '--d': `${(i % 4) * 0.07}s`, '--c': g.color }}>
       <button type="button" onClick={() => onOpen(g)} onMouseEnter={start} onMouseLeave={stop} onFocus={start} onBlur={stop} aria-label={`Play ${g.caption}`}>
-        {g.src ? <video ref={vid} src={g.src} muted loop playsInline preload="metadata" /> : <span className="gallery__art" aria-hidden="true"><i /><i /></span>}
+        {g.thumb && <img src={g.thumb} alt="" loading="lazy" draggable="false" />}
+        {g.src ? <video ref={vid} src={g.src} muted loop playsInline preload="metadata" /> : !g.thumb && <span className="gallery__art" aria-hidden="true"><i /><i /></span>}
         <span className="gtile__badge">Video</span>
         <span className="gtile__play" aria-hidden="true"><i /></span>
         <span className="gallery__cap">{g.caption}</span>
@@ -46,9 +47,9 @@ export default function Gallery() {
         {GALLERY.map((g, i) => (g.kind === 'video' ? (
           <VideoTile key={g.id} g={g} i={i} onOpen={setOpen} />
         ) : (
-          <li key={g.id} className="gtile" data-reveal style={{ '--d': `${(i % 4) * 0.07}s`, '--c': g.color }}>
+          <li key={g.id} className={`gtile gslot gslot--${i}`} data-reveal style={{ '--d': `${(i % 4) * 0.07}s`, '--c': g.color }}>
             <button type="button" onClick={() => g.src && setOpen(g)} aria-label={g.caption}>
-              {g.src ? <img src={g.src} alt="" loading="lazy" /> : <span className="gallery__art" aria-hidden="true"><i /><i /></span>}
+              {g.src ? <img src={g.src} alt="" loading="lazy" style={g.pos ? { objectPosition: g.pos } : undefined} /> : <span className="gallery__art" aria-hidden="true"><i /><i /></span>}
               <span className="gallery__no">{String(i + 1).padStart(2, '0')}</span>
               <span className="gallery__cap">{g.caption}</span>
             </button>

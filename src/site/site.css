@@ -1081,3 +1081,122 @@ main[data-enter='wipe'] { animation-name: enter-wipe; animation-duration: 1s; }
 .case__hero .poster--fit { aspect-ratio: auto; height: min(82svh, 900px); }
 .pop__cover--img { display: grid; place-items: center; padding: 14px; background: #0b0b0b; }
 .pop__cover--img img { display: block; max-width: 100%; max-height: min(78svh, 700px); width: auto; height: auto; object-fit: contain; border-radius: 8px; }
+
+/* hover preview: tall design posters get a width that keeps them inside the stack */
+.peek__card--p { width: 270px; }
+.peek__card--p:nth-child(2) { width: 240px; }
+
+/* video cards with a real thumbnail */
+.vid__thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.vid__thumb ~ .vid__disc { display: none; }
+.vid__thumb + .vid__play, .vid__thumb ~ .vid__play { top: 40%; }
+.vid::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 45%, rgb(0 0 0 / 70%)); pointer-events: none; }
+.vid > .vid__cap, .vid > .vid__eq, .vid > .vid__play { z-index: 2; }
+
+/* instagram reels: the real embedded player, shown in place like the YouTube cards */
+.pile { aspect-ratio: 1 / 1.4; }
+.mess--reel { display: grid; gap: 8px; aspect-ratio: auto; background: transparent; box-shadow: none; }
+.mess--reel iframe { display: block; width: 100%; aspect-ratio: 3 / 5; min-height: 0; border: 0; border-radius: 14px; background: #fff; box-shadow: 0 26px 40px -20px rgb(0 0 0 / 60%); }
+.mess__open { justify-self: center; padding: 5px 14px; border-radius: 999px; background: rgb(255 255 255 / 92%); color: #14140f; font: 700 12px var(--f-head); letter-spacing: .02em; }
+.mess--reel:hover { box-shadow: none; }
+@media (max-width: 800px) { .pile { aspect-ratio: auto; } .mess--reel { grid-column: span 1; } .mess--reel iframe { aspect-ratio: 3 / 5; } }
+
+/* singing pile: ten pieces, the last row of photos below the reels */
+.pile { aspect-ratio: 1 / 1.73; }
+@media (max-width: 800px) { .pile { aspect-ratio: auto; } }
+
+/* ---- role galleries: smaller photos, tall and short mixed, even gaps ---- */
+.rgal { display: block; columns: 5; column-gap: clamp(10px, 1.2vw, 16px); }
+.rgal__item { display: block; break-inside: avoid; grid-column: auto; margin: 0 0 clamp(10px, 1.2vw, 16px); border-radius: 14px; }
+.rgal__item--0 { aspect-ratio: 3 / 4; }
+.rgal__item--1 { aspect-ratio: 1 / 1; }
+.rgal__item--2 { aspect-ratio: 4 / 3; }
+.rgal__item--3 { aspect-ratio: 4 / 5; }
+.rgal__item--4 { aspect-ratio: 5 / 4; }
+.rgal__item--5 { aspect-ratio: 3 / 4; }
+.rgal__item button { border-radius: 14px; }
+@media (max-width: 1200px) { .rgal { columns: 4; } }
+@media (max-width: 900px) { .rgal { columns: 3; } }
+@media (max-width: 560px) { .rgal { columns: 2; } .rgal__item:nth-child(n) { grid-column: auto; aspect-ratio: auto; } .rgal__item--0, .rgal__item--3, .rgal__item--5 { aspect-ratio: 3 / 4; } .rgal__item--1, .rgal__item--2, .rgal__item--4 { aspect-ratio: 1 / 1; } }
+
+/* ---- work: leadership strips, smaller cards that alternate tall and short ---- */
+.lrow__shots { align-items: flex-start; gap: clamp(12px, 1.6vw, 20px); }
+.lrow__shots li { width: clamp(140px, 14vw, 190px); }
+.lrow__shots li:nth-child(odd) .lrow__photo { aspect-ratio: 3 / 4; }
+.lrow__shots li:nth-child(even) .lrow__photo { aspect-ratio: 1 / 1; }
+.lrow__shots li:nth-child(3n) .lrow__photo { aspect-ratio: 4 / 5; }
+.lrow__cap { font-size: 12px; padding: 22px 10px 8px; }
+.lrow__idx { font-size: 18px; }
+@media (max-width: 760px) { .lrow__shots li { width: 42vw; } }
+
+/* role page: the back link sits above the big heading (which overlapped and blocked clicks), a bigger italic gallery heading, room under the gallery */
+.back { position: relative; z-index: 3; margin-bottom: 28px; }
+.role__h--gal { margin-bottom: clamp(18px, 2.4vw, 32px); color: var(--ink); font: italic 400 clamp(56px, 10vw, 150px)/.95 var(--f-serif); letter-spacing: -.02em; text-transform: none; }
+.rgal { margin-bottom: clamp(56px, 8vw, 110px); padding-bottom: 6px; }
+
+/* role page: projects built in this role */
+.role__h--proj { margin-top: clamp(40px, 6vw, 80px); padding-top: 18px; border-top: 1px solid var(--ink); }
+.rproj { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: clamp(18px, 2.4vw, 32px); }
+.rproj__card { display: grid; gap: 14px; align-content: start; }
+.rproj__media { display: block; overflow: hidden; border-radius: 16px; box-shadow: 0 24px 40px -26px rgb(0 0 0 / 55%); }
+.rproj__media .poster { transition: scale .8s var(--ease); }
+.rproj__media:hover .poster { scale: 1.05; }
+.rproj__body { display: grid; gap: 6px; }
+.rproj__body h3 { font: 700 clamp(22px, 2.4vw, 32px)/1.1 var(--f-head); letter-spacing: -.02em; }
+.rproj__body p { color: var(--muted); max-width: 44ch; }
+.rproj__links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 8px; }
+.rproj__more { font: 700 14px var(--f-head); border-bottom: 1px solid currentColor; }
+.rproj__more:hover { color: var(--c, var(--accent)); }
+
+/* projects heading matches the gallery heading; a lone project sits image-left, words-right */
+.role__h--proj { margin-bottom: clamp(18px, 2.4vw, 32px); color: var(--ink); font: italic 400 clamp(56px, 10vw, 150px)/.95 var(--f-serif); letter-spacing: -.02em; text-transform: none; }
+.rproj--solo { grid-template-columns: 1fr; }
+.rproj--solo .rproj__card { grid-template-columns: minmax(200px, 400px) minmax(0, 1fr); align-items: center; gap: clamp(20px, 4vw, 64px); }
+.rproj--solo .rproj__body { gap: 10px; }
+.rproj--solo .rproj__body h3 { font-size: clamp(28px, 3.4vw, 48px); }
+.rproj--solo .rproj__body p { font-size: clamp(16px, 1.5vw, 20px); max-width: 40ch; }
+@media (max-width: 720px) { .rproj--solo .rproj__card { grid-template-columns: 1fr; } }
+
+/* role page: one "Work" section; a lone project fills its half, designs sit under the projects */
+.rproj--solo .rproj__card { grid-template-columns: minmax(260px, 1.2fr) minmax(0, 1fr); gap: clamp(24px, 4.5vw, 72px); }
+.role__sub { margin: 0 0 14px; color: var(--muted); font: 700 13px var(--f-head); text-transform: uppercase; letter-spacing: .14em; }
+.role__sub--gap { margin-top: clamp(36px, 5vw, 64px); }
+.rdes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); margin-bottom: clamp(40px, 6vw, 80px); }
+.rdes li { display: grid; gap: 10px; align-content: start; }
+.rdes__tile { display: block; overflow: hidden; border-radius: 16px; background: #0b0b0b; cursor: zoom-in; box-shadow: 0 24px 40px -26px rgb(0 0 0 / 55%); transition: transform .5s var(--ease); }
+.rdes__tile:hover { transform: translateY(-6px); }
+.rdes__tile img { display: block; width: 100%; height: auto; }
+.rdes__cap { color: var(--muted); font-size: 14px; }
+@media (max-width: 720px) { .rdes { grid-template-columns: 1fr 1fr; } .rproj--solo .rproj__card { grid-template-columns: 1fr; } }
+.rproj { margin-bottom: clamp(40px, 6vw, 80px); } .rproj + .role__sub { margin-top: 0; }
+
+/* two photos in the hover preview: one top left, one lower right */
+.peek__card--g:first-child { left: 0; right: auto; top: 0; bottom: auto; width: 230px; --r: -5deg; }
+.peek__card--g:nth-child(2) { width: 270px; aspect-ratio: 4 / 3; --r: 5deg; }
+
+/* quicker iris for Home and Contact, and their pages arrive without waiting */
+.cv-iris.is-in { transition-duration: .4s; }
+.cv-iris.is-out { transition-duration: .42s; }
+main[data-enter='zoom'], main[data-enter='left'] { animation-duration: .5s; animation-delay: 0s; }
+
+/* ---- gallery: a bento layout, 12 columns, tall / wide / square tiles that lock together ---- */
+.gallery { --cols: 12; --gap: clamp(8px, 1.2vw, 16px); grid-auto-flow: row; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: calc((100cqw - 11 * var(--gap)) / 12); }
+.gslot { grid-row: auto; grid-column: auto; }
+.gslot--0 { grid-column: 1 / 5;  grid-row: 1 / 6; }    /* tall hero */
+.gslot--1 { grid-column: 5 / 11; grid-row: 1 / 4; }    /* video */
+.gslot--2 { grid-column: 11 / 13; grid-row: 1 / 4; }   /* slim tall */
+.gslot--3 { grid-column: 5 / 9;  grid-row: 4 / 6; }
+.gslot--4 { grid-column: 9 / 13; grid-row: 4 / 6; }
+.gslot--5 { grid-column: 1 / 4;  grid-row: 6 / 11; }   /* tall */
+.gslot--6 { grid-column: 4 / 10; grid-row: 6 / 9; }    /* video */
+.gslot--7 { grid-column: 10 / 13; grid-row: 6 / 9; }   /* square */
+.gslot--8 { grid-column: 4 / 9;  grid-row: 9 / 11; }
+.gslot--9 { grid-column: 9 / 13; grid-row: 9 / 11; }
+.gtile--video.gslot { grid-column: auto; }
+.gslot--1.gtile--video { grid-column: 5 / 11; }
+.gslot--6.gtile--video { grid-column: 4 / 10; }
+@media (max-width: 760px) {
+  .gallery { --cols: 2; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; }
+  .gslot:nth-child(n) { grid-column: auto; grid-row: auto; aspect-ratio: 4 / 5; }
+  .gslot.gtile--video:nth-child(n) { grid-column: 1 / -1; aspect-ratio: 16 / 10; }
+}

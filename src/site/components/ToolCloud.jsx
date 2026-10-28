@@ -18,6 +18,30 @@ const MARKS = {
       <path d="M7.200 5.800l10.600 6.200-4.400 1.300-2.200 4.200z" fill="#f6f3ec" />
     </>
   ),
+  bandlab: () => (
+    <>
+      <circle cx="12" cy="12" r="11" fill="#f12c18" />
+      <g fill="#fff">
+        <rect x="5.200" y="10" width="2" height="4" rx="1" />
+        <rect x="8.600" y="7" width="2" height="10" rx="1" />
+        <rect x="12" y="4.500" width="2" height="15" rx="1" />
+        <rect x="15.400" y="8" width="2" height="8" rx="1" />
+      </g>
+    </>
+  ),
+  capcut: () => (
+    <>
+      <rect x="1.500" y="1.500" width="21" height="21" rx="6" fill="#0b0b0b" />
+      <path d="M5.800 8.300l5.200 3.700-5.200 3.700v-2.600l2.200-1.100L5.800 10.900z" fill="#fff" />
+      <path d="M12.300 6.800h2.400l3.500 10.400h-2.400z" fill="#fff" />
+    </>
+  ),
+  vn: () => (
+    <>
+      <rect x="1.500" y="1.500" width="21" height="21" rx="6" fill="#0b0b0b" />
+      <text x="12" y="15.800" textAnchor="middle" fontFamily="Arial, Helvetica, sans-serif" fontWeight="800" fontSize="10.500" fill="#fff">VN</text>
+    </>
+  ),
   guitar: (color) => (
     <>
       <circle cx="12" cy="12" r="11" fill={color} />

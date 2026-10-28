@@ -34,7 +34,10 @@ export function NavProvider({ children }) {
       }
       busy.current = true;
       const hit = at && (at.x || at.y);
-      setLook({ variant: variantFor(to), x: hit ? `${at.x}px` : '50%', y: hit ? `${at.y}px` : '50%' });
+      const variant = variantFor(to);
+      // the iris (Home and Contact) is quick; the other curtains take a little longer
+      const [cover, reveal] = variant === 'iris' ? [380, 420] : [600, 750];
+      setLook({ variant, x: hit ? `${at.x}px` : '50%', y: hit ? `${at.y}px` : '50%' });
       setPhase('in');
       setTimeout(() => {
         navigate(to);
@@ -43,8 +46,8 @@ export function NavProvider({ children }) {
         setTimeout(() => {
           setPhase('idle');
           busy.current = false;
-        }, 750);
-      }, 600);
+        }, reveal);
+      }, cover);
     },
     [navigate, pathname],
   );

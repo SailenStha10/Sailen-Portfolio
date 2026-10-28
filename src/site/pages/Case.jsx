@@ -23,7 +23,7 @@ export default function Case() {
       <FitLine hero rows={[p.title.split(' ').length > 1 ? [p.title.split(' ')[0], p.title.split(' ').slice(1).join(' ')] : [p.title]]} />
       <dl className="case__meta">
         <div><dt>Type</dt><dd>{p.category}</dd></div>
-        <div><dt>Role</dt><dd>Design + development</dd></div>
+        <div><dt>Role</dt><dd>{{ Development: 'Design + development', Design: 'Design', Music: 'Music' }[p.category] || 'Design + development'}</dd></div>
         <div><dt>Project</dt><dd>{String(i + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</dd></div>
       </dl>
       <div className="case__hero" data-reveal><Poster p={p} index={i} /></div>
@@ -36,7 +36,7 @@ export default function Case() {
         ))}
       </div>
       <div className="case__links" data-reveal>
-        {p.live && p.live !== '#' && <a className="btn" href={p.live} target="_blank" rel="noreferrer noopener">Live site ↗</a>}
+        {p.live && p.live !== '#' && <a className="btn" href={p.live} target="_blank" rel="noreferrer noopener">{p.category === 'Music' ? 'Watch on YouTube ↗' : 'Live site ↗'}</a>}
         {p.code && p.code !== '#' && <a className="btn btn--ghost" href={p.code}>Source ↗</a>}
       </div>
       <TLink className="next" to={`/work/${next.id}`}>

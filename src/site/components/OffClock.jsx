@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { projects } from '../../data/site';
-import { GALLERY } from '../content';
+import { GALLERY, SING } from '../content';
 import Poster from './Poster';
 
 /** Floating preview of the projects and photos behind one line. It trails the pointer. */
@@ -18,9 +18,9 @@ function Peek({ item, at }) {
       const idx = projects.findIndex((p) => p.id === id);
       return idx < 0 ? null : <div key={id} className="peek__card peek__card--p" style={{ '--n': i }}><Poster p={projects[idx]} index={idx} /></div>;
     }
-    const g = GALLERY.find((x) => x.id === id);
+    const g = k === 's' ? SING.photos[id] : GALLERY.find((x) => x.id === id);
     return g ? (
-      <div key={id} className="peek__card peek__card--g" style={{ '--n': i, '--c': g.color }}>
+      <div key={`${k}${id}`} className="peek__card peek__card--g" style={{ '--n': i, '--c': g.color }}>
         {g.src ? <img src={g.src} alt="" draggable="false" /> : <span className="gallery__art" aria-hidden="true"><i /><i /></span>}
         <b>{g.caption}</b>
       </div>

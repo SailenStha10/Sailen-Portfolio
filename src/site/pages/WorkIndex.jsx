@@ -5,7 +5,7 @@ import Poster from '../components/Poster';
 import SelectedWork from '../components/SelectedWork';
 import { TLink } from '../components/nav';
 import useReveal from '../components/useReveal';
-import { DESIGNS, GALLERY, SING } from '../content';
+import { DESIGNS, SING } from '../content';
 
 const clamp = (v) => Math.max(0, Math.min(1, v));
 const lerp = (a, b, t) => a + (b - a) * t;
@@ -151,6 +151,15 @@ function DesignPop({ d, onClose }) {
 
 /* ---------- Singing ---------- */
 
+function Photo({ g, style, flow }) {
+  return (
+    <li className={`mess mess--photo ${flow ? 'mess--flow' : ''}`} style={{ ...style, '--c': 'var(--ink)' }} {...(flow ? {} : { 'data-reveal': true })}>
+      <img src={g.src} alt={g.caption} loading="lazy" draggable="false" />
+      <b>{g.caption}</b>
+    </li>
+  );
+}
+
 function SingHero() {
   return (
     <div className="sing__hero">
@@ -167,23 +176,38 @@ function wave(amp, k) {
   return d;
 }
 
-function Video({ v, style }) {
+function Video({ v, style, flow }) {
   const [on, setOn] = useState(false);
   const vid = useRef(null);
-  const start = () => { setOn(true); vid.current?.play().catch(() => {}); };
+  // plays with sound; if the browser refuses sound before any click on the page, fall back to muted
+  const start = () => {
+    setOn(true);
+    const el = vid.current;
+    if (!el) return;
+    el.muted = false;
+    el.play().catch(() => { el.muted = true; el.play().catch(() => {}); });
+  };
   const stop = () => { setOn(false); if (vid.current) { vid.current.pause(); vid.current.currentTime = 0; } };
   const body = (
     <>
-      {v.src && <video ref={vid} src={v.src} muted loop playsInline preload="metadata" />}
-      {on && v.yt && !v.src && <iframe src={`https://www.youtube-nocookie.com/embed/${v.yt}?autoplay=1&mute=1&controls=0&loop=1&playlist=${v.yt}`} title={v.title} allow="autoplay; encrypted-media" />}
+      {v.thumb && <img className="vid__thumb" src={v.thumb} alt="" draggable="false" />}
+      {v.src && <video ref={vid} src={v.src} loop playsInline preload="metadata" />}
+      {on && v.yt && !v.src && <iframe src={`https://www.youtube-nocookie.com/embed/${v.yt}?autoplay=1&mute=0&controls=0&loop=1&playlist=${v.yt}`} title={v.title} allow="autoplay; encrypted-media" />}
       <span className="vid__disc" aria-hidden="true"><i /></span>
       <span className="vid__play" aria-hidden="true"><i /></span>
       <span className="vid__eq" aria-hidden="true">{Array.from({ length: 12 }, (_, i) => <i key={i} style={{ '--i': i }} />)}</span>
       <span className="vid__cap"><b>{v.title}</b><small>{v.note}</small></span>
     </>
   );
+  if (v.ig) {
+    return (
+      <li className="mess mess--reel" style={style} data-reveal>
+        <iframe src={`https://www.instagram.com/reel/${v.ig}/embed/`} title={v.title} loading="lazy" allow="autoplay; encrypted-media; fullscreen" allowFullScreen scrolling="no" />
+      </li>
+    );
+  }
   return (
-    <li className="mess mess--vid" data-playing={on || undefined} style={style} data-reveal onMouseEnter={start} onMouseLeave={stop} onFocus={start} onBlur={stop}>
+    <li className={`mess mess--vid ${flow ? 'mess--flow' : ''}`} data-playing={on || undefined} style={style} {...(flow ? {} : { 'data-reveal': true })} onMouseEnter={start} onMouseLeave={stop} onFocus={start} onBlur={stop}>
       <a className="vid" href={v.href} target="_blank" rel="noreferrer noopener" aria-label={`Watch ${v.title}`}>{body}</a>
     </li>
   );
@@ -191,30 +215,28 @@ function Video({ v, style }) {
 
 /* position of each piece in the pile: left / top / width in %, tilt in degrees */
 const PILE = [
-  { l: 2, t: 2, w: 40, r: -3 },
+  { l: 2, t: 1.1, w: 40, r: -3 },
   { l: 47, t: 0, w: 22, r: 4 },
-  { l: 58, t: 21, w: 38, r: 2.5 },
-  { l: 6, t: 35, w: 24, r: -5 },
-  { l: 24, t: 60, w: 40, r: -1.5 },
-  { l: 69, t: 57, w: 24, r: 5 },
+  { l: 58, t: 11.9, w: 38, r: 2.5 },
+  { l: 6, t: 19.8, w: 24, r: -5 },
+  { l: 24, t: 34, w: 40, r: -1.5 },
+  { l: 69, t: 32.3, w: 24, r: 5 },
+  { l: 14, t: 52.2, w: 28, r: -2.5 },
+  { l: 56, t: 53.5, w: 28, r: 2 },
+  { l: 22, t: 82.2, w: 24, r: 3 },
+  { l: 54, t: 84.4, w: 24, r: -4 },
 ];
 
 function Singing() {
-  const photos = SING.photos.map((id) => GALLERY.find((g) => g.id === id)).filter(Boolean);
-  const order = [SING.videos[0], photos[0], SING.videos[1], photos[1], SING.videos[2], photos[2]];
+  const order = [SING.videos[0], SING.photos[0], SING.videos[1], SING.photos[1], SING.videos[2], SING.photos[2], SING.videos[3], SING.videos[4], SING.photos[3], SING.photos[4]];
   return (
     <section className="sing">
             <ul className="pile">
         {order.map((it, i) => {
           const P = PILE[i];
           const style = { '--l': `${P.l}%`, '--t': `${P.t}%`, '--w': `${P.w}%`, '--r': `${P.r}deg`, '--z': i % 2 ? 2 : 1, '--bob': `${5 + (i % 3)}s`, '--d': `${i * 0.12}s` };
-          if (it.title && it.href) return <Video key={it.title} v={it} style={style} />;
-          return (
-            <li key={it.id} className="mess mess--photo" style={{ ...style, '--c': it.color }} data-reveal>
-              {it.src ? <img src={it.src} alt={it.caption} loading="lazy" /> : <span className="gallery__art" aria-hidden="true"><i /><i /></span>}
-              <b>{it.caption}</b>
-            </li>
-          );
+          if (it.href) return <Video key={it.title} v={it} style={style} />;
+          return <Photo key={it.src} g={it} style={style} />;
         })}
       </ul>
       <div className="sing__links-wrap">

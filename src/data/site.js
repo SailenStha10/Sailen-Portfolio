@@ -20,10 +20,10 @@ export const profile = {
   tagline:
     'A BSc CSIT student who turns ideas into software, interfaces, artwork and songs.',
   socials: [
-    { label: 'GitHub', href: 'https://github.com/', icon: 'github' },
-    { label: 'LinkedIn', href: 'https://linkedin.com/', icon: 'linkedin' },
-    { label: 'Instagram', href: 'https://instagram.com/', icon: 'instagram' },
-    { label: 'YouTube', href: 'https://youtube.com/', icon: 'youtube' },
+    { label: 'GitHub', href: 'https://github.com/SailenStha10', icon: 'github' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/sailendrashrestha/', icon: 'linkedin' },
+    { label: 'Instagram', href: 'https://www.instagram.com/sailennn_/', icon: 'instagram' },
+    { label: 'YouTube', href: 'https://www.youtube.com/@theastitwaband', icon: 'youtube' },
   ],
 };
 
@@ -198,6 +198,8 @@ export const skillGroups = [
       { name: 'Photoshop', icon: 'photoshop' },
       { name: 'Illustrator', icon: 'illustrator' },
       { name: 'Canva', icon: 'canva' },
+      { name: 'CapCut', icon: 'capcut' },
+      { name: 'VN Editor', icon: 'vn' },
       { name: 'Typography', icon: 'type', glyph: true },
       { name: 'Prototyping', icon: 'layers', glyph: true },
       { name: 'Branding', icon: 'palette', glyph: true },
@@ -215,6 +217,7 @@ export const skillGroups = [
       { name: 'Stage Presence', icon: 'spotlight', glyph: true },
       { name: 'Production', icon: 'headphones', glyph: true },
       { name: 'Guitar', icon: 'guitar', glyph: true },
+      { name: 'BandLab', icon: 'bandlab' },
     ],
   },
 ];
@@ -222,11 +225,45 @@ export const skillGroups = [
 // Roles held, newest focus first as given. `art` picks the illustration.
 // `group` splits the Experience page: 'community' or 'technical'. `work` is a short list of what was done (PLACEHOLDER, edit freely).
 export const experience = [
-  { id: 'leo', figW: '46%', figure: '/president.webp', summary: 'Leading a youth service club.', description: 'As President I lead the board, set the year\'s plan and keep a team of volunteers moving in one direction. The work is part planning, part people, and mostly showing up.', gallery: [{ caption: 'Fundraiser', src: '' }, { caption: 'Service drive', src: '' }, { caption: 'Board meeting', src: '' }, { caption: 'Team day', src: '' }], group: 'community', role: 'President', org: 'Leo Club of Kathmandu Natural', kind: 'Leadership', art: 'crown', color: 'var(--yellow)', work: ['Lead the board and plan the yearly service calendar', 'Organise community drives and fundraising events', 'Coordinate members, partners and sponsors'] },
-  { id: 'rotaract', classic: true, figW: '50%', figure: '/secretary-desk.webp', hover: 'var(--blue)', summary: 'Keeping a service club organised.', description: 'As Secretary I keep the club running behind the scenes: records, communication and the logistics that make events happen on time.', gallery: [{ caption: 'Club event', src: '' }, { caption: 'Community visit', src: '' }, { caption: 'Meeting', src: '' }, { caption: 'Members', src: '' }], group: 'community', role: 'Secretary', org: 'Rotaract Club of Kathmandu Height', kind: 'Leadership', art: 'people', color: 'var(--blue)', work: ['Keep records, minutes and official communication', 'Support project planning and event logistics', 'Welcome and onboard new members'] },
-  { id: 'csit', classic: true, figW: '50%', figure: '/partnership.webp', hover: 'var(--mint)', summary: 'Connecting students and partners.', description: 'I handle the association\'s paperwork and build partnerships with companies and campuses, so students get more workshops, events and chances to learn.', gallery: [{ caption: 'Workshop', src: '' }, { caption: 'Partner meet', src: '' }, { caption: 'Student event', src: '' }, { caption: 'Team', src: '' }], group: 'community', role: 'Secretary & Partnership Lead', org: 'CSIT Association of Nepal', kind: 'Community', art: 'building', color: 'var(--mint)', work: ['Handle documentation, meetings and notices', 'Build partnerships with companies and campuses', 'Help run student events and workshops'] },
-  { id: 'codeit', figure: '/dev-dashboard.webp', figW: '64%', hover: '#d93a3a', summary: 'Building features as a full stack intern.', description: 'I worked with the team on real product features, from the React interface to the Node.js API and the database behind it.', gallery: [{ caption: 'Feature demo', src: '' }, { caption: 'Code review', src: '' }, { caption: 'Dashboard', src: '' }, { caption: 'Team', src: '' }], group: 'technical', role: 'Full Stack Developer Intern', org: 'Code IT', kind: 'Engineering', art: 'laptop', color: 'var(--blue)', work: ['Built full stack features with React and Node.js', 'Worked with APIs, databases and version control', 'Shipped fixes and took part in code reviews'] },
-  { id: 'surox', figure: '/design-studio.webp', figW: '64%', hover: 'var(--blue)', summary: 'Designing and building client interfaces.', description: 'Part designer, part developer: I turned briefs into graphics and layouts, then into responsive, working pages.', gallery: [{ caption: 'Web build', src: '' }, { caption: 'Banner set', src: '' }, { caption: 'Brand material', src: '' }, { caption: 'Layout', src: '' }], group: 'technical', role: 'Frontend Developer & Graphics Designer', org: 'Surox Technology', kind: 'Design + Code', art: 'palette', color: 'var(--accent)', work: ['Built responsive interfaces for client sites', 'Designed graphics, banners and brand material', 'Turned design files into clean frontend code'] },
+  { id: 'leo', figW: '46%', figure: '/president.webp', summary: 'Leading a youth service club.', description: 'As President I lead the board, set the year\'s plan and keep a team of volunteers moving in one direction. The work is part planning, part people and mostly showing up.', gallery: [
+    { caption: 'Annual general meeting', src: '/leo/l1.webp' },
+    { caption: 'Pinning ceremony', src: '/leo/l2.webp' },
+    { caption: 'Speaking at the podium', src: '/leo/l3.webp' },
+    { caption: 'Addressing the batch', src: '/leo/l4.webp' },
+    { caption: 'Group photo', src: '/leo/l5.webp' },
+    { caption: 'Leo orientation certificate', src: '/leo/l6.webp' },
+    { caption: 'Annual general meeting team', src: '/leo/l7.webp' },
+  ], group: 'community', role: 'President', org: 'Leo Club of Kathmandu Natural', kind: 'Leadership', art: 'crown', color: 'var(--yellow)', work: ['Lead the board and plan the yearly service calendar', 'Organise community drives and fundraising events', 'Coordinate members, partners and sponsors'] },
+  { id: 'rotaract', classic: true, figW: '50%', figure: '/secretary-desk.webp', hover: 'var(--blue)', summary: 'Keeping a service club organised.', description: 'As Secretary I keep the club running behind the scenes: records, communication and the logistics that make events happen on time.', gallery: [
+    { caption: 'Speaking at a session', src: '/rotaract/r1.webp' },
+    { caption: 'Flag exchange at the general meeting', src: '/rotaract/r2.webp' },
+    { caption: 'Team dinner', src: '/rotaract/r3.webp' },
+    { caption: 'Donation drive', src: '/rotaract/r4.webp' },
+    { caption: 'Collecting supplies', src: '/rotaract/r5.webp' },
+    { caption: 'Team with the donations', src: '/rotaract/r6.webp' },
+    { caption: 'General meeting', src: '/rotaract/r7.webp' },
+    { caption: 'Running the meeting', src: '/rotaract/r8.webp' },
+    { caption: 'Candle night', src: '/rotaract/r9.webp' },
+    { caption: 'Awards and certificates', src: '/rotaract/r10.webp' },
+    { caption: 'Rangotsav group photo', src: '/rotaract/r11.webp' },
+  ], group: 'community', role: 'Secretary', org: 'Rotaract Club of Kathmandu Height', kind: 'Leadership', art: 'people', color: 'var(--blue)', work: ['Keep records, minutes and official communication', 'Support project planning and event logistics', 'Welcome and onboard new members'] },
+  { id: 'csit', classic: true, figW: '50%', figure: '/partnership.webp', hover: 'var(--mint)', summary: 'Connecting students and partners.', description: 'I handle the association\'s paperwork and build partnerships with companies and campuses, so students get more workshops, events and chances to learn.', gallery: [
+    { caption: 'Partner visit', src: '/csit/c1.webp' },
+    { caption: 'Signing the partnership', src: '/csit/c2.webp' },
+    { caption: 'Handing over a certificate', src: '/csit/c3.webp' },
+    { caption: 'Addressing the students', src: '/csit/c4.webp' },
+    { caption: 'Welcome ceremony', src: '/csit/c5.webp' },
+    { caption: 'DevFest 2024 Kathmandu', src: '/csit/c6.webp' },
+    { caption: 'Speaking at an event', src: '/csit/c7.webp' },
+    { caption: 'Goalfest certificate of appreciation', src: '/csit/c8.webp' },
+    { caption: 'Receiving the lanyard', src: '/csit/c9.webp' },
+  ], group: 'community', role: 'Secretary & Partnership Lead', org: 'CSIT Association of Nepal', kind: 'Community', art: 'building', color: 'var(--mint)', work: ['Handle documentation, meetings and notices', 'Build partnerships with companies and campuses', 'Help run student events and workshops'] },
+  { id: 'codeit', projects: ['nagar'], figure: '/dev-dashboard.webp', figW: '64%', hover: '#d93a3a', summary: 'Building features as a full stack intern.', description: 'I worked with the team on real product features, from the React interface to the Node.js API and the database behind it.', group: 'technical', role: 'Full Stack Developer Intern', org: 'Code IT', kind: 'Engineering', art: 'laptop', color: 'var(--blue)', work: ['Built full stack features with React and Node.js', 'Worked with APIs, databases and version control', 'Shipped fixes and took part in code reviews'] },
+  { id: 'surox', projects: ['rmfc', 'steffish', 'allseason'], figure: '/design-studio.webp', figW: '64%', hover: 'var(--blue)', summary: 'Designing and building client interfaces.', description: 'Part designer, part developer: I turned briefs into graphics and layouts, then into responsive, working pages.', designs: [
+    { caption: 'Vijaya Dashami greeting', src: '/designs/vijaya.webp' },
+    { caption: 'Hello, World', src: '/designs/hello-world.webp' },
+    { caption: 'Idea to Launch', src: '/designs/launch.webp' },
+  ], group: 'technical', role: 'Frontend Developer & Graphics Designer', org: 'Surox Technology', kind: 'Design + Code', art: 'palette', color: 'var(--accent)', work: ['Built responsive interfaces for client sites', 'Designed graphics, banners and brand material', 'Turned design files into clean frontend code'] },
 ];
 
 // PLACEHOLDER projects
@@ -348,15 +385,31 @@ export const projects = [
     code: '',
   },
   {
-    id: 'p3',
-    title: 'Acoustic Covers EP',
+    id: 'timibina',
+    featured: true,
+    title: 'Timi Bina',
     category: 'Music',
-    summary: 'A small collection of acoustic covers recorded at home.',
-    description:
-      'Five songs arranged and recorded as a creative experiment. Cover art and visualisers were designed to match the mood of each track.',
-    tags: ['Vocals', 'Recording', 'Cover art'],
-    accent: 'var(--mint)',
-    live: '#',
-    code: '#',
+    summary: 'The official music video of Timi Bina by The अस्तित्व’s.',
+    description: 'An original song and its official music video, released on the band’s YouTube channel.',
+    tags: ['Music video', 'Original song', 'YouTube'],
+    accent: 'var(--orange)',
+    image: '/videos/HgcQOuZtVis.jpg',
+    ar: '16 / 9',
+    live: 'https://www.youtube.com/watch?v=HgcQOuZtVis',
+    code: '',
+  },
+  {
+    id: 'adhuro',
+    featured: true,
+    title: 'Adhuro Patra',
+    category: 'Music',
+    summary: 'An original song by Sailen Shrestha.',
+    description: 'A song written and sung by Sailen Shrestha, released on The अस्तित्व’s YouTube channel.',
+    tags: ['Original song', 'Vocals', 'YouTube'],
+    accent: 'var(--blue)',
+    image: '/videos/CVu4-l5QsMs.jpg',
+    ar: '16 / 9',
+    live: 'https://www.youtube.com/watch?v=CVu4-l5QsMs',
+    code: '',
   },
 ];

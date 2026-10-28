@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { experience, projects } from '../../data/site';
+import FitLine from '../components/FitLine';
 import Poster from '../components/Poster';
 import SelectedWork from '../components/SelectedWork';
 import { TLink } from '../components/nav';
@@ -235,40 +236,73 @@ function Singing() {
   );
 }
 
-/* ---------- Leadership & community: photos stacked as a pyramid, the leader at the top ---------- */
+/* ---------- Leadership & community: one row per role, an arrow carrying its photos to the right ---------- */
 
-const PYRAMID = [
-  [['leo', 0]],
-  [['rotaract', 0], ['csit', 0]],
-  [['leo', 1], ['rotaract', 1], ['csit', 1]],
+const ROWS = [
+  { id: 'leo', kicker: 'Leading' },
+  { id: 'rotaract', kicker: 'Organising' },
+  { id: 'csit', kicker: 'Connecting' },
 ];
 
+/** One role: its title above, then every photo from its gallery travelling along an arrow. Scrolls sideways when there are many. */
+function LeadRow({ row, n }) {
+  const ref = useRef(null);
+  const scroller = useRef(null);
+  const [seen, setSeen] = useState(false);
+  const [more, setMore] = useState(false);
+  useEffect(() => {
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setSeen(true); io.disconnect(); } }, { threshold: 0.3 });
+    io.observe(ref.current);
+    const check = () => setMore(scroller.current.scrollWidth > scroller.current.clientWidth + 4);
+    check();
+    addEventListener('resize', check);
+    return () => { io.disconnect(); removeEventListener('resize', check); };
+  }, []);
+  const e = experience.find((x) => x.id === row.id);
+  const nudge = (dir) => scroller.current.scrollBy({ left: dir * scroller.current.clientWidth * 0.8, behavior: 'smooth' });
+  return (
+    <li className={`lrow ${row.id === 'leo' ? 'lrow--dark' : ''} ${row.id === 'rotaract' ? 'lrow--tint' : ''} ${seen ? 'is-in' : ''}`} ref={ref} style={{ '--c': e.color }}>
+      <header className="lrow__head">
+        <div>
+          <span className="lrow__no">{String(n + 1).padStart(2, '0')} · {row.kicker}</span>
+          <h3>{e.role}</h3>
+          <p>{e.org}</p>
+        </div>
+        <div className="lrow__tools">
+          {more && (
+            <>
+              <button type="button" className="icon-btn" onClick={() => nudge(-1)} aria-label="Scroll left">←</button>
+              <button type="button" className="icon-btn" onClick={() => nudge(1)} aria-label="Scroll right">→</button>
+            </>
+          )}
+          <TLink className="lrow__go" to={`/experience/${e.id}`}>See the work →</TLink>
+        </div>
+      </header>
+      <div className="lrow__scroll" ref={scroller}>
+        <ul className="lrow__shots">
+          {e.gallery.map((g, k) => (
+            <li key={g.caption} style={{ '--k': k, '--r': `${k % 2 ? 1.8 : -1.8}deg` }}>
+              <TLink className="lrow__photo" to={`/experience/${e.id}`} aria-label={`${e.role}: ${g.caption}`}>
+                {g.src ? <img src={g.src} alt="" loading="lazy" /> : <span className="gallery__art" aria-hidden="true"><i /><i /></span>}
+                <span className="lrow__idx">{String(k + 1).padStart(2, '0')}</span>
+                <span className="lrow__cap">{g.caption}</span>
+              </TLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </li>
+  );
+}
+
 function Leadership() {
-  const last = PYRAMID.length - 1;
   return (
     <section className="lead">
-      <header className="chap">
-        <span className="chap__no">04</span>
-        <h2>Leadership &amp; community</h2>
-      </header>
-      <div className="pyr">
-        {PYRAMID.map((row, r) => (
-          <ul key={r} className={`pyr__row pyr__row--${r}`}>
-            {row.map(([id, n], k) => {
-              const e = experience.find((x) => x.id === id);
-              const g = e.gallery[n];
-              return (
-                <li key={id + n} data-reveal style={{ '--d': `${(last - r) * 0.18 + k * 0.08}s`, '--c': e.color, '--r': `${(k - (row.length - 1) / 2) * 2.4}deg` }}>
-                  <TLink className="pyr__photo" to={`/experience/${e.id}`} aria-label={`${e.role}, ${e.org}`}>
-                    {g.src ? <img src={g.src} alt="" loading="lazy" /> : <span className="gallery__art" aria-hidden="true"><i /><i /></span>}
-                    <span className="pyr__cap"><b>{r === 0 ? e.role : e.org}</b><small>{r === 0 ? e.org : g.caption}</small></span>
-                  </TLink>
-                </li>
-              );
-            })}
-          </ul>
-        ))}
-      </div>
+      <p className="lead__no" data-reveal>04</p>
+      <FitLine rows={[['Leadership', '& community']]} />
+      <ol className="lrows">
+        {ROWS.map((r, n) => <LeadRow key={r.id} row={r} n={n} />)}
+      </ol>
     </section>
   );
 }

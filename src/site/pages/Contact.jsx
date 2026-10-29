@@ -6,6 +6,7 @@ import Socials from '../components/Socials';
 import useReveal from '../components/useReveal';
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY;
 const width = (v, ph) => `${Math.max(v.length, ph.length) + 1}ch`;
 
 export default function Contact() {
@@ -24,26 +25,29 @@ export default function Contact() {
     setErr(found);
     if (Object.values(found).some(Boolean) || status === 'sending') return;
     setStatus('sending');
-    try {
-      const res = await fetch(`https://formsubmit.co/ajax/${profile.email}`, {
+    const name = f.name.trim(), email = f.email.trim(), message = f.msg.trim();
+    const subject = `Portfolio message from ${name}`;
+    const post = async (url, payload) => {
+      const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          name: f.name.trim(),
-          email: f.email.trim(),
-          message: f.msg.trim(),
-          _replyto: f.email.trim(),
-          _subject: `Portfolio message from ${f.name.trim()}`,
-          _template: 'table',
-          _captcha: 'false',
-        }),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       if (!res.ok || data.success === 'false' || data.success === false) throw new Error(data.message || 'failed');
+    };
+    try {
+      if (WEB3FORMS_KEY) {
+        await post('https://api.web3forms.com/submit', { access_key: WEB3FORMS_KEY, name, email, message, subject, from_name: name, replyto: email });
+      } else {
+        await post(`https://formsubmit.co/ajax/${profile.email}`, { name, email, message, _replyto: email, _subject: subject, _template: 'table', _captcha: 'false' });
+      }
       setStatus('sent');
       setF({ name: '', email: '', msg: '' });
     } catch {
-      setStatus('error');
+      // the service is down or not set up: hand the message to the visitor's mail app so it is never lost
+      setStatus('fallback');
+      location.href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`${message}\n\n— ${name} (${email})`)}`;
     }
   };
 
@@ -91,8 +95,8 @@ export default function Contact() {
           <p className="letter__err" role="alert">Please fill in your name, a valid email and a few words (10+ characters).</p>
         )}
         {status === 'sent' && <p className="letter__ok" role="status">Thanks! Your message is on its way. I’ll reply to the email you gave.</p>}
-        {status === 'error' && (
-          <p className="letter__err" role="alert">Couldn’t send that. Please try again, or write to <a href={`mailto:${profile.email}`}>{profile.email}</a>.</p>
+        {status === 'fallback' && (
+          <p className="letter__err" role="alert">Couldn’t send that directly, so I opened your email app with the message ready. If nothing opened, write to <a href={`mailto:${profile.email}`}>{profile.email}</a>.</p>
         )}
         <button className="btn btn--lg" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'Sending…' : 'Send it →'}</button>
       </form>

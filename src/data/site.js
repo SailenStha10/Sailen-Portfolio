@@ -9,7 +9,7 @@ export const profile = {
   initial: 'S',
   // Put a photo in /public (e.g. /me.jpg) and set it here to replace the illustrated avatar.
   photo: '/photos/me.jpg',
-  email: 'sailendrashrestha2020@gmail.com', // the contact form opens a mail to this address
+  email: 'sailendrashrestha2020@gmail.com', // the contact form sends its messages to this address
   location: 'Nepal', // PLACEHOLDER
   roles: [
     'UI/UX Designer',
